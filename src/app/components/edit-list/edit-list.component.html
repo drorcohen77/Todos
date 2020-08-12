@@ -1,0 +1,105 @@
+<form [formGroup]="editForm" (ngSubmit)="onSubmit()" class="editForm shadowEffect" *ngIf="ID == -1">
+    <div class="container">
+        <p>welcome to edit List</p>
+        <hr>
+        <div class="form">
+
+            <div  class="fieldGroup">
+
+                <div class="fields">
+                    <label>Caption:</label>
+                    <input type="text" formControlName="caption">
+                    <ng-container *ngIf="editForm.get('caption') as ctrl">
+                        <ng-container *ngIf="ctrl.errors as errors">
+                            <div class="errors" *ngIf="ctrl.touched">
+                                <span *ngIf="errors['required']">Required!</span>
+                                <span *ngIf="errors?.maxLength">Caption to long!</span>
+                                <span *ngIf="errors['captionAvailable']">Caption not available!</span>
+                            </div>
+                        </ng-container>
+                    </ng-container>
+                </div>
+
+                <div  class="fields">
+                    <label>Discription:</label>
+                    <textarea formControlName="description"></textarea>
+                    <ng-container *ngIf="editForm.get('description') as ctrl">
+                        <ng-container *ngIf="ctrl.errors as errors">
+                            <div class="errors" *ngIf="ctrl.touched">
+                                <span *ngIf="errors.required"></span>
+                                <span *ngIf="errors?.maxLength as err">Letters: {{err.actualLength}}/{{err.requiredLength}}</span>
+                                <span *ngIf="errors?.minWords as err">Words: {{err.actualLength}}/{{err.requiredLength}}</span>
+                            </div>
+                        </ng-container>
+                    </ng-container>
+                </div>
+
+                <div class="fields">
+                    <label>Icon:</label>
+                    <select formControlName="icon">
+                        <ng-container>
+                            <option value="" disabled selected hidden>Select icon</option>
+                            <option *ngFor="let icon of icons" [value]="icon"><mat-icon>{{icon}}</mat-icon></option>
+                        </ng-container>
+                    </select>
+                    <ng-container *ngIf="editForm.get('caption') as ctrl">
+                        <ng-container *ngIf="ctrl.errors as errors">
+                            <div class="errors" *ngIf="ctrl.touched">
+                                <span *ngIf="errors['required']">Required!</span>
+                            </div>
+                        </ng-container>
+                    </ng-container>
+                </div>
+
+                <div class="fields">
+                    <label>Color:</label>
+                    <select formControlName="color">
+                        <ng-container>
+                            <option value="" disabled selected hidden>Select color</option>
+                            <option *ngFor="let color of colors" [value]="color" [ngStyle]="{'color': color}">{{color}}</option>
+                        </ng-container>
+                    </select>
+                    <ng-container *ngIf="editForm.get('caption') as ctrl">
+                        <ng-container *ngIf="ctrl.errors as errors">
+                            <div class="errors" *ngIf="ctrl.touched">
+                                <span *ngIf="errors['required']">Required!</span>
+                            </div>
+                        </ng-container>
+                    </ng-container>
+                </div>
+
+            </div>
+        </div>
+        <div class="save-Button">
+            <button type="submit" [disabled] = "!editForm.valid">Save</button>
+        </div>
+    </div> 
+</form>
+
+<!-- <pre>value: {{editForm.value | json}}</pre> -->
+<pre>errors: {{editForm.get('caption').errors | json}}</pre>
+
+<div *ngIf="ID != -1">
+    <p>{{list$ | async | json}}</p>
+</div>
+
+<!-- <mat-form-field>
+    <mat-select [(value)]="mark" placeholder="Label">
+      <mat-select-trigger *ngIf="mark" class="mark">
+        <mat-icon [ngStyle]="{'color': mark.color}">brightness_1</mat-icon>
+        <span>{{mark.name}}</span>
+      </mat-select-trigger>
+      <mat-option [value]="null">
+        <mat-icon [ngStyle]="{'opacity': 0}">brightness_1</mat-icon>
+        <span>Not selected</span>
+      </mat-option>
+      <mat-option *ngFor="let mark of marks" [value]="mark">
+        <mat-icon [ngStyle]="{'color': mark.color}">brightness_1</mat-icon>
+        <span>{{mark.name}}</span>
+      </mat-option>
+    </mat-select>
+  </mat-form-field> -->
+  
+
+
+

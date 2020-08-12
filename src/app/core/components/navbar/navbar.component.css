@@ -1,0 +1,52 @@
+:host {
+    display: grid;
+    /* grid-template-rows: auto auto auto; */
+}
+
+nav p{
+    margin: auto;
+    padding: 15px;
+    background-color: var(--p800);
+    color: var(--p100);
+    font-size: 25px;
+    font-weight: 300px;
+}
+
+nav ul {
+    background-color: var(--p400);
+    list-style: none;
+    margin-bottom: 30px;
+}
+
+nav a {
+    text-decoration: none;
+    display: block;
+    padding: 10px;
+    text-align: center;
+    font-size: 18px;
+    font-weight: 200px;
+    color: black;
+}
+
+nav a:hover {
+    cursor: pointer;
+    background-color: var(--p800);
+    color: var(--p100);
+}
+
+
+nav li.active-link a{
+    background-color: var(--p600);
+    color: var(--p100);
+}
+
+@media screen and (min-width: 768px) {
+
+    nav ul {
+        display: flex;
+    }
+
+    nav li {
+        flex: 1 1 0;
+    }
+}

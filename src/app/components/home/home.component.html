@@ -1,0 +1,30 @@
+<div class="first-strip">
+    <div class="welcome">
+        <p>Welcome to Todo-App!</p>
+        <span>{{nowDate | date: 'dd/MM/yyyy'}}</span>
+    </div>
+    <div class="buttons">
+        <button (click)="gotoEdit()">Create new list</button>
+        <button (click)="gotolists()">View all lists </button>
+        <button (click)="gotoitems()">View all items</button>
+    </div>
+</div>
+
+<div class="second-strip">
+    <div class="icons">
+        <mat-icon>list</mat-icon>
+        <mat-icon>done_all</mat-icon>
+        <mat-icon>hourglass_empty</mat-icon>
+    </div>
+    <div class="icon">
+        <span>{{listsNum}}</span>
+        <span>Lists</span>
+        <span>{{itemsNum}}</span>
+        <span>Todo Items</span>
+        <span>{{activeItems}}</span>
+        <p>Active Items</p>
+    </div>
+    <!-- <div class="icons">
+        
+    </div> -->
+</div>
