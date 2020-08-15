@@ -1,10 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { StateService } from 'src/app/core/services/state-srvices.service';
 import { map, switchMap } from 'rxjs/operators';
-import { Observable } from 'rxjs';
-import { TodoList } from 'src/app/core/models/TodoList.model';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
+
+import { StateService } from 'src/app/core/services/state-srvices.service';
 import { FormDataService } from 'src/app/core/services/form-data.service';
 import { IconsColors } from 'src/app/core/models/IconsColor.model';
 import { WordsValidators } from 'src/app/core/MyValidators/words-validator';
@@ -18,57 +17,88 @@ import { WordsValidators } from 'src/app/core/MyValidators/words-validator';
 })
 export class EditListComponent implements OnInit {
 
-  public listID$: Observable<number>;
-  public list$: Observable<TodoList>;
+  public list: any;
   public ID: number;
   public icons = IconsColors.icons;
   public colors = IconsColors.colors;
 
   public editForm: FormGroup;
 
+  // editForm = this.fb.group({
+  //   caption: ['', 
+  //     Validators.required,
+  //     Validators.maxLength(15),
+  //     (ctrl) => this.formData.validateCaption(ctrl)
+  //   ],
+  //   description: ['',
+  //     Validators.required,
+  //     Validators.maxLength(60),
+  //     WordsValidators.minWords(10)
+  //   ],
+  //   icon: ['',Validators.required],
+  //   color: ['',Validators.required]
+  // });
+ 
+
   constructor(
     private rout: ActivatedRoute, 
     private stateService: StateService,
-    private formData: FormDataService
+    private formData: FormDataService,
+    private fb: FormBuilder
   ) { }
 
   ngOnInit(): void {
-    this.listID$ = this.rout.params.pipe(
-      map(listid => +listid['id'])
-    );
-    
-    this.listID$.subscribe(id => this.ID = id);
-    
-    if (this.ID !== -1) {
-        this.list$ = this.listID$.pipe(
-          switchMap( id => this.stateService.getTodoList(id) )
-      );
+
+    this.rout.params.pipe(
+        map(listid => this.ID = +listid['id']), // to extract the ':id' from the "/lists/:id/edit" url
+        switchMap( id => this.stateService.getTodoList(id) ) // get from service the a list by id and switching the return from id: Observable to list: Observable 
+      )
+      .subscribe(reslist => this.list = reslist); // subscribe to extract list: TodoList from Observable
+
+    if (this.ID === -1) {
+      this.list = '';
     }
-    
+
     this.buildEditForm();
   }
 
 
   buildEditForm() {
+
     this.editForm = new FormGroup ({
-      caption: new FormControl('', [
+      caption: new FormControl(this.list.caption, [
         Validators.required,
-        Validators.maxLength(15)],
+        Validators.maxLength(15)
+      ],
         (ctrl) => this.formData.validateCaption(ctrl)
       ),
-      description: new FormControl('', [
+      description: new FormControl(this.list.description, [
         Validators.maxLength(60),
         Validators.required,
         WordsValidators.minWords(10)
       ]),
-      icon: new FormControl('',Validators.required),
-      color: new FormControl('',Validators.required)
+      icon: new FormControl(this.list.icon,Validators.required),
+      color: new FormControl(this.list.color,Validators.required)
     });
-    console.log(this.editForm)
+    
   }
 
 
   onSubmit() {
-    console.log(this.editForm.value)
+    this.list = this.editForm.value;
+
+    if (this.ID === -1) {
+      this.stateService.addList(
+        this.list.caption,
+        this.list.description,
+        this.list.icon,
+        this.list.color
+      );
+    } else {
+      this.stateService.ModifyList(this.editForm.value);
+    }
+
+    this.editForm.reset();
   }
+
 }

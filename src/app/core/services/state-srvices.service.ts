@@ -11,20 +11,20 @@ import { tap, map } from 'rxjs/operators';
 export class StateService {
 
   private todoList:TodoList[] = [
-    {
-      id: 1,
-      caption: 'one',
-      description: 'test1',
-      image_url: 'string',
-      color: 'black',
-    },
-    {
-      id: 2,
-      caption: 'two',
-      description: 'test2',
-      image_url: 'string',
-      color: 'red',
-    }
+    // {
+    //   id: 1,
+    //   caption: 'one',
+    //   description: 'test1 t t t t t t t t t',
+    //   image_url: 'event',
+    //   color: 'black',
+    // },
+    // {
+    //   id: 2,
+    //   caption: 'two',
+    //   description: 'test2 t t t t t t t t t',
+    //   image_url: 'work',
+    //   color: 'red',
+    // }
   ];
   private todoItem:TodoItem[] = [
     {
@@ -95,7 +95,7 @@ export class StateService {
 
   //Modifing Data:
 
-  async addList(caption: string, description: string, color: string, icon: string): Promise<number>{
+  async addList(caption: string, description: string, icon: string,color: string): Promise<number>{
     let newID:number = Math.ceil(Math.random()*100);
     let todoType = 'lists';
     
@@ -105,8 +105,8 @@ export class StateService {
       id: newID,
       caption: caption,
       description: description,
-      color: color,
-      image_url: icon
+      image_url: icon,
+      color: color
     };
     // let newtodolist:TodoList[] = [...this.todoList,newList];
 

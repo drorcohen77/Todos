@@ -1,0 +1,52 @@
+:host {
+    display: flex;
+    flex-direction: column;
+}
+
+p {
+    padding-left: 20px;
+    font-size: 20px;
+    color: var(--p800);
+}
+
+.all-lists {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    max-width: 500px;
+    margin: 20px;
+}
+
+.list {
+    display: flex;
+    flex-direction: column;
+    margin: 20px;
+    padding: 15px;
+    width: 150px;
+    height: 100px;
+    background-color: var(--p50);
+    cursor: pointer;
+    align-items: center;
+    border-radius: 5px;
+    font-size: 25px;
+    border: 1px solid var(--p100);
+}
+
+.list:hover {
+    opacity: 1.0;
+    /*IE9*/
+    -ms-transform: scale(1.1);
+    /*Safari 3-8*/
+    -webkit-transform: scale(1.1);
+    transform: scale(1.1);
+    background-color: var(--p100);
+}
+
+.icon {
+    margin-bottom: 15px;
+}
+
+.mat-icon {
+    width: auto;
+    font-size: 35px;
+}

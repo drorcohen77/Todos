@@ -27,7 +27,7 @@ export class HomeComponent implements OnInit {
       .pipe(
         map((items,index) => {
           let activeItemsList:TodoItem[] = [];
-          
+          console.log(items[index])
           if (items[index].isCompleted == true) {
             activeItemsList.push(items[index]);
           }

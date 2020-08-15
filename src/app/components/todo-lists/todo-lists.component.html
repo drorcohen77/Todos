@@ -1,1 +1,26 @@
-<p>todo-lists works!</p>
+<p class="bread-cramb">Lists</p>
+<div class="all-lists">
+    <div class="list"
+         *ngFor="let list of lists" 
+         routerLink="/lists/{{list.id}}" 
+         [ngStyle]="{'color': list.color}"
+    >
+        <div class="icon">
+            <mat-icon>{{list.image_url}}</mat-icon>
+        </div>
+        <div>
+            {{list.caption}}
+        </div>
+    </div>
+
+    <div class="list" routerLink="/lists/-1/edit">
+        <div class="icon">
+            <mat-icon class="mat-icon">add_circle_outline</mat-icon>
+        </div>
+        <div>
+            New list
+        </div>
+    </div>
+</div>
+
+
