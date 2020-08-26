@@ -1,1 +1,40 @@
-<p>list-details works!</p>
+<div class="bread-cramb">
+    <p routerLink="/lists" class="router">
+        Lists
+        <span> > </span>
+    </p>
+    <p [ngStyle]="{'color': (todoList$ | async).color}">{{(todoList$ | async).caption | upperCaseFirstLetter}}</p>
+</div>
+
+<div class="container">
+    <div class="items">
+        <div class="icon" [ngStyle]="{'color':(todoList$ | async).color}">
+            <mat-icon>{{(todoList$ | async).image_url}}</mat-icon>
+        </div>
+
+        <div *ngIf="!delClicked" class="caption">
+            <div class="discription">
+                {{(todoList$ | async).description | upperCaseFirstLetter}}
+            </div>
+
+            <div class="buttons">
+                <button class="new" (click)="onNewList()">New List...</button>
+                <button class="edit" (click)="onEditList()">Edit...</button>
+                <button class="delete" (click)="onDeleteList()">Delete</button>
+            </div>
+        </div>
+
+        <div *ngIf="delClicked">
+            <div class="discription">
+                Are sure you want to delete {{(todoList$ | async).caption | upperCaseFirstLetter}} list?
+            </div>
+
+            <div class="buttons">
+                <button class="delete" (click)="onConfirmDelete()">Yes</button>
+                <button class="cancle" (click)="onCancleDelete()">Cancle</button>
+            </div>
+        </div>
+    </div>
+
+    <app-items [ListItems$]="listItems$"></app-items>
+</div>

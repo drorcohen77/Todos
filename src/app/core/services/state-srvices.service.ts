@@ -11,20 +11,20 @@ import { tap, map } from 'rxjs/operators';
 export class StateService {
 
   private todoList:TodoList[] = [
-    // {
-    //   id: 1,
-    //   caption: 'one',
-    //   description: 'test1 t t t t t t t t t',
-    //   image_url: 'event',
-    //   color: 'black',
-    // },
-    // {
-    //   id: 2,
-    //   caption: 'two',
-    //   description: 'test2 t t t t t t t t t',
-    //   image_url: 'work',
-    //   color: 'red',
-    // }
+    {
+      id: 1,
+      caption: 'one',
+      description: 'test1 t t t t t t t t t',
+      image_url: 'event',
+      color: 'black',
+    },
+    {
+      id: 2,
+      caption: 'two',
+      description: 'test2 t t t t t t t t t',
+      image_url: 'work',
+      color: 'red',
+    }
   ];
   private todoItem:TodoItem[] = [
     {
@@ -35,6 +35,18 @@ export class StateService {
     },
     {
       id: 2,
+      caption: 'two',
+      listId: 1,
+      isCompleted: true
+    },
+    {
+      id: 3,
+      caption: 'tree',
+      listId: 1,
+      isCompleted: true
+    },
+    {
+      id: 4,
       caption: 'two',
       listId: 2,
       isCompleted: true
@@ -51,7 +63,6 @@ export class StateService {
 
   getAllTodoList():Observable<TodoList[]> {
     this.todolist$.next(this.todoList);
-    console.log(this.todolist)
     return this.todolist;
   }
 
@@ -65,14 +76,21 @@ export class StateService {
     return this.getAllTodoItem()
       .pipe(
         map(itemlist => {
-          itemlist.forEach(item => {
-            if (+item.listId == listindex) {
-              listOfIndexItem.push(item);
-            }
-          });
-        return listOfIndexItem
+          listOfIndexItem = itemlist.filter(item => item.listId == listindex);
+        return listOfIndexItem;
         })
       );
+
+      // this.getAllTodoItem().subscribe(
+    //   todoItems => listOfIndexItem = todoItems.filter(item => item.listId == listindex)
+    //     // todoItems => todoItems.forEach(item => {
+    //     //   if(item.listId == listindex)
+    //     //     listOfIndexItem.push(item);
+    //     //   }
+    //     // )
+    // );
+    // console.log(listOfIndexItem)
+    // return listOfIndexItem;
   }
 
   getTodoList(id: number):Observable<TodoList> {
@@ -167,9 +185,11 @@ export class StateService {
 
 
   MarkAsCompleted(itemId): Promise<void> {
-    this.todoItem.find(item => item.id === itemId).isCompleted = true;
+    let item = this.todoItem.find(item => item.id === itemId);
+    item.isCompleted? item.isCompleted = false : item.isCompleted = true;
     this.todoitem$.next(this.todoItem);
     console.log(this.todoItem.find(item => item.id === itemId))
+    console.log(this.todoitem$.subscribe(x=> console.log(x)))
     return Promise.resolve();
   }
 

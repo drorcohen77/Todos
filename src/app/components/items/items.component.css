@@ -1,0 +1,59 @@
+.itemsList {
+    padding: 20px;
+    color: var(--p700);
+}
+
+li {
+    display: flex;
+    list-style: none;
+    cursor: pointer;
+    margin-bottom: 10px;
+}
+
+.caption {
+    font-size: 20px;
+    padding: 3px;
+    margin-bottom: 0px;
+}
+
+.completed {
+    display: flex;
+    opacity: 0.5;
+    width: 40%;
+    text-decoration: line-through;
+    -webkit-text-decoration-color: red; /* Safari */  
+    text-decoration-color: red;
+}
+
+mat-icon {
+    margin-right: 5px;
+}
+
+.form {
+    display: flex;
+}
+
+input {
+    font-size: 20px;
+    border: 1px solid var(--p600);
+    border-radius: 4px;
+    padding-left: 6px;
+}
+
+button {
+    margin-left: 7px;
+    width: 30px;
+    font-size: 20px;
+    font-weight: 600;
+    background-color: var(--p400);
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+/* .strike-line {
+    height: 27px;
+    position: absolute;
+    padding-left: 3px;
+    font-size: 30px;
+    color: rgb(245, 78, 78);
+} */

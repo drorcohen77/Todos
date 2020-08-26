@@ -15,7 +15,7 @@ nav p{
 nav ul {
     background-color: var(--p400);
     list-style: none;
-    margin-bottom: 30px;
+    margin-bottom: 10px;
 }
 
 nav a {

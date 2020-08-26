@@ -1,1 +1,40 @@
-<p>items works!</p>
+<div class="itemsList">
+    <ul *ngFor="let item of listItems">
+        <li *ngIf="!item.isCompleted">
+            <div>
+                <mat-icon (click)="onTurnCompleted(item.id)">check_box_outline_blank</mat-icon>
+            </div>
+            
+            <p class="caption not-completed">{{item.caption | upperCaseFirstLetter}}</p>
+        </li>
+
+        <li *ngIf="item.isCompleted">
+            <div>
+                <mat-icon (click)="onTurnCompleted(item.id)">check</mat-icon>
+            </div>
+        
+            <p class="caption completed">{{item.caption | upperCaseFirstLetter}}</p>
+        </li>
+    </ul>
+    <div>
+        <form class="form" [formGroup]="addItem" (ngSubmit)="onSubmit()">
+            <div>
+                <mat-icon>check_box_outline_blank</mat-icon>
+            </div>
+            <div class="fields" >
+                <input type="text" formControlName="newItem">
+                <button type="submit" [disabled] ="!addItem.valid">+</button>
+                <ng-container *ngIf="addItem.get('newItem') as ctrl">
+                    <ng-container *ngIf="ctrl.errors as errors">
+                        <div *ngIf="ctrl.touched" class="errors">
+                            <span *ngIf="errors.minLength as err">Letters: {{err.actualLength}}/{{err.requiredLength}}</span>
+                            <span *ngIf="errors.maxLength as err">Letters: {{err.actualLength}}/{{err.requiredLength}}</span>
+                            <span *ngIf="errors.minWords as err">Words: {{err.actualLength}}/{{err.requiredLength}}</span>
+                            <span *ngIf="errors.maxWords as err">Words: {{err.actualLength}}/{{err.requiredLength}}</span>
+                        </div>
+                    </ng-container>
+                </ng-container>
+            </div>
+        </form>
+    </div>
+</div>

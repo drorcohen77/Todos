@@ -1,0 +1,83 @@
+.bread-cramb {
+    display: flex;
+    margin-bottom: 10px;
+}
+
+.router {
+    cursor: pointer;
+}
+
+.items {
+    display: flex;
+}
+
+.container {
+    padding-left: 10px;
+}
+
+.caption {
+    padding: 15px;
+}
+
+.icon {
+    padding: 10px;
+    width: 120px;
+}
+
+mat-icon{
+    font-size: 100px;
+}
+
+.discription {
+    padding-left: 5px;
+    margin-bottom: 8px;
+    font-size: 22px;
+}
+
+.buttons {
+    display: flex;
+    justify-content: center;
+}
+
+button {
+    border: 1px solid darkgray;
+    border-radius: 30px;
+    margin: 5px;
+    padding: 10px;
+    font-size: 15px;
+    width: 110px;
+    height: 40px;
+    color: var(--p50);
+}
+
+button:hover {
+    border: 1px solid darkgray;
+    border-radius: 30px;
+    color: black;
+    cursor: pointer;
+}
+
+.new {
+    background-color: var(--g800);
+}
+
+
+.new:hover {
+    background-color: var(--g400);
+}
+
+.edit {
+    background-color: var(--p700);
+}
+
+.edit:hover {
+    background-color: var(--p400);
+}
+
+.delete {
+    background-color: rgb(218, 33, 33);
+}
+
+.delete:hover {
+    background-color: rgb(255, 80, 80);
+}
