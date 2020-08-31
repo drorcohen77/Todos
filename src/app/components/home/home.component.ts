@@ -13,27 +13,25 @@ export class HomeComponent implements OnInit {
 
   public listsNum: number;
   public itemsNum: number;
-  public activeItems: number;
+  public activeItems: number = 0;
   public nowDate: Date = new Date(); 
 
 
   constructor(private stateService: StateService, private nav: Router) { }
 
   ngOnInit(): void {
+
     this.stateService.getAllTodoList().subscribe(lists => this.listsNum = lists.length);
     this.stateService.getAllTodoItem().subscribe(items => this.itemsNum = items.length);
 
-    this.stateService.getAllTodoItem()
-      .pipe(
-        map((items,index) => {
-          let activeItemsList:TodoItem[] = [];
-          console.log(items[index])
-          if (items[index].isCompleted == true) {
-            activeItemsList.push(items[index]);
-          }
-        this.activeItems = activeItemsList.length ;
-        })
-      ).subscribe()
+    this.stateService.getAllTodoItem().subscribe(allItems => 
+      allItems.map((Item) => {          
+        if (Item.isCompleted == true) {
+          this.activeItems++;
+        }
+      })
+    );
+
   }
 
 

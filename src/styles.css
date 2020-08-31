@@ -1,6 +1,7 @@
 html, body {
     width: 100%;
     height: 100%;
+    /* background-color: rgb(247, 247, 247); */
 }
 
 body {
@@ -44,8 +45,13 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
     border: 1px solid red;
     color: red;
 }
+.bread-cramb {
+  
+  margin-bottom: 10px;
+}
 
 .bread-cramb {
+  display: flex;
   padding-left: 20px;
   font-size: 20px;
   color: var(--p800);

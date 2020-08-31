@@ -1,30 +1,29 @@
 <div class="first-strip">
     <div class="welcome">
-        <p>Welcome to Todo-App!</p>
+        <p>Welcome to Todo App!</p>
         <span>{{nowDate | date: 'dd/MM/yyyy'}}</span>
     </div>
     <div class="buttons">
-        <button (click)="gotoEdit()">Create new list</button>
-        <button (click)="gotolists()">View all lists </button>
-        <button (click)="gotoitems()">View all items</button>
+        <button (click)="gotoEdit()">Create list</button>
+        <button (click)="gotolists()">View lists </button>
+        <button (click)="gotoitems()">View items</button>
     </div>
 </div>
 
 <div class="second-strip">
-    <div class="icons">
+    <div class="list">
         <mat-icon>list</mat-icon>
+        <span class="counter">{{listsNum}}</span>
+        <span class="caption">Lists</span>
+    </div>
+    <div class="done_all">
         <mat-icon>done_all</mat-icon>
+        <span class="counter">{{itemsNum}}</span>
+        <span class="caption">Todo Items</span>
+    </div>
+    <div class="activeItems">
         <mat-icon>hourglass_empty</mat-icon>
+        <span class="counter">{{activeItems}}</span>
+        <span class="caption">Active Items</span>
     </div>
-    <div class="icon">
-        <span>{{listsNum}}</span>
-        <span>Lists</span>
-        <span>{{itemsNum}}</span>
-        <span>Todo Items</span>
-        <span>{{activeItems}}</span>
-        <p>Active Items</p>
-    </div>
-    <!-- <div class="icons">
-        
-    </div> -->
 </div>

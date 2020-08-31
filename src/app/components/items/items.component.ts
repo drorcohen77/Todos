@@ -1,10 +1,10 @@
 import { Component, OnInit, Input } from '@angular/core';
 
 import { StateService } from 'src/app/core/services/state-srvices.service';
-import { FormBuilder, Validators, FormGroup, FormControl } from '@angular/forms';
+import { Validators, FormGroup, FormControl } from '@angular/forms';
 import { WordsValidators } from '../../core/MyValidators/words-validator'
 import { TodoItem } from 'src/app/core/models/TodoItem.model';
-import { tap } from 'rxjs/operators';
+import { filter } from 'rxjs/operators';
 
 
 @Component({
@@ -18,6 +18,7 @@ export class ItemsComponent implements OnInit {
 
   public listItems: TodoItem[];
   public addItem: FormGroup;
+  public activeItems: any;
   // public ListItems: Observable<TodoItem[]>
 
   // public addItem = this.fb.group({
@@ -28,13 +29,21 @@ export class ItemsComponent implements OnInit {
   // });
 
   
-  constructor(private stateService: StateService, private fb: FormBuilder) { }
+  constructor(private stateService: StateService) { }
 
   ngOnInit(): void {
-    this.ListItems$.subscribe(items => this.listItems = items);
+    
+    if (this.ListItems$ !== undefined) {
+      this.ListItems$.subscribe(items => this.listItems = items);
 
-    this.buildAddItem();
+      this.buildAddItem();
+    } else {
+      this.stateService.getAllTodoItem().subscribe(todoItems => 
+        this.listItems = todoItems.filter(activeItems => activeItems.isCompleted === false))
+    }
+
   }
+
 
   buildAddItem() {
     this.addItem = new FormGroup ({

@@ -1,22 +1,25 @@
-:host {
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-sizing: border-box;
+}
+
+form {
+    display: flex;
+    justify-content: center;
+    box-sizing: border-box;
+    min-height: 100%;
+    width: 320px;
+}
+
+.editForm {
     display: flex;
     justify-content: center;
     box-sizing: border-box;
     height: 100%;
-}
-
-.editForm {
-    
     border-radius: 5px;
-    height: 450px;
-    max-height: 550px;
-    width: 30%;
     background-color: var(--p50);
-}
-
-.container {
-    box-sizing: border-box;
-    overflow-wrap: inherit;
 }
 
 .form {
@@ -29,7 +32,7 @@
     width: 100%;
 }
 
-p {
+form p {
     text-align: center;
     font-size: 30px;
     margin: 20px;
@@ -98,38 +101,3 @@ button[disabled]{
   cursor: auto;
 }
 
-.shadowEffect
-{
-  position: relative;
-}
-
-.shadowEffect:before, .shadowEffect:after
-{
-  z-index: -1;
-  position: absolute;
-  content: "";
-  bottom: 15px;
-  left: 10px;
-  width: 50%;
-  top: 80%;
-  max-width:300px;
-  background: #777;
-  -webkit-box-shadow: 0 15px 10px #777;
-  -moz-box-shadow: 0 15px 10px #777;
-  box-shadow: 0 15px 10px #777;
-  -webkit-transform: rotate(-3deg);
-  -moz-transform: rotate(-3deg);
-  -o-transform: rotate(-3deg);
-  -ms-transform: rotate(-3deg);
-  transform: rotate(-3deg);
-}
-.shadowEffect:after
-{
-  -webkit-transform: rotate(3deg);
-  -moz-transform: rotate(3deg);
-  -o-transform: rotate(3deg);
-  -ms-transform: rotate(3deg);
-  transform: rotate(3deg);
-  right: 10px;
-  left: auto;
-}

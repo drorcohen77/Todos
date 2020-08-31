@@ -1,0 +1,36 @@
+:host {
+    padding: 20px;
+    margin: 0px;
+    display: flex;
+    /* flex-direction: column; */
+    justify-content: center;
+    background-color: rgb(247, 247, 247);
+}
+
+.backHome {
+    text-align: center;
+}
+
+img {
+    width: 565px;
+    height: 100%;
+}
+
+button {
+    border: 1px solid darkgray;
+    border-radius: 30px;
+    margin: 5px;
+    padding: 10px;
+    font-size: 15px;
+    width: 150px;
+    height: 40px;
+    color: var(--p50);
+    background-color: var(--p700);
+}
+
+button:hover {
+    border: 1px solid darkgray;
+    color: black;
+    cursor: pointer;
+    background-color: var(--p400);
+}

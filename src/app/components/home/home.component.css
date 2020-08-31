@@ -5,39 +5,43 @@
 
 .first-strip {
     justify-content: center;
-    padding: 40px;
-    /* justify-content: center; */
+    /* padding: 25px; */
     background-color: var(--p900);
     color: var(--p100);
 }
 
 .welcome{
     flex-direction: row;
+    padding-top: 10px;
 }
 
 .welcome :first-child {
     display: flex;
     justify-content: center;
+    margin-top: 10px;
     margin-bottom: 30px;
-    font-size: 35px;
+    font-size: 30px;
 }
 
 .welcome :nth-child(2) {
     display: flex;
     justify-content: center;
-    font-size: 25px;
+    font-size: 20px;
 }
 
 .buttons {
     margin-top: 15px;
-    display: flex;
+    display: grid;
     justify-content: center;
 }
 
 button {
     border: 1px solid darkgray;
     border-radius: 30px;
-    margin: 20px;
+    /* margin: 20px; */
+    width: 150px;
+    margin: 14px;
+    margin-top: 10px;
     padding: 10px;
     font-size: 15px;
     background-color: var(--g800);
@@ -53,26 +57,75 @@ button:hover {
 }
 
 .second-strip {
-    /* display: flex; */
+    display: flex;
     justify-content: center;
-    padding: 40px;
+    padding: 15px;
     background-color: var(--p50);
 }
 
 .second-strip mat-icon {
-    margin: 10px;
-    /* justify-content: space-between; */
-}
-
-.icons {
-    justify-content: center;
-}
-
-.icon {
-    flex-direction: column;
-}
-
-.mat-icon {
+    margin-left: 5px;
+    text-align: center;
+    padding: 10px;
+    width: 75px;
+    height: 65px;
     font-size: 40px;
     color: var(--p500);
+}
+
+.list {
+    display: grid;
+}
+
+.done_all {
+    display: grid;
+    margin-left: 50px;
+    margin-right: 50px;
+}
+
+.activeItems {
+    display: grid;
+}
+
+.counter {
+    height: 55px;
+    text-align: center;
+    padding-top: 10px;
+    font-size: 30px;
+    color: black;
+}
+
+.caption {
+    text-align: center;
+    font-size: 13px;
+}
+
+@media screen and (min-width: 768px) {
+
+    .buttons {
+        display: flex;
+    }
+
+    button {
+        margin: 30px;
+    }
+
+    .counter {
+        font-size: 40px;
+    }
+    
+    .caption {
+        text-align: center;
+        font-size: 15px;
+    }
+
+    .second-strip {
+        padding-left: 150px;
+        padding-right: 150px;
+        justify-content: space-evenly;
+    }
+
+    .second-strip mat-icon {
+        font-size: 45px;
+    }
 }
