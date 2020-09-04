@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable, pipe } from 'rxjs';
 import { ActivatedRoute, Router } from '@angular/router';
+import { map, switchMap, tap } from 'rxjs/operators';
 
 import { TodoList } from 'src/app/core/models/TodoList.model';
 import { StateService } from 'src/app/core/services/state-srvices.service';
-import { map, switchMap, tap } from 'rxjs/operators';
 import { TodoItem } from 'src/app/core/models/TodoItem.model';
 
 
@@ -19,7 +19,7 @@ export class ListDetailsComponent implements OnInit {
   public todoList$: Observable<TodoList>;
   public listItems$: Observable<TodoItem[]>;
   public delClicked: boolean = false;
-  private listeID: number;
+  public listeID: number;
 
 
   constructor(
@@ -43,32 +43,6 @@ export class ListDetailsComponent implements OnInit {
     this.listItems$ = this.todoList$.pipe(
         switchMap(() => this.stateService.getItemsFromList(this.listeID))
       );
-      // this.stateService.getItemsFromList(this.listeID)
-    // this.todoList$ = this.rout.params.pipe(
-    //     map(urlid => { this.listeID = +urlid['id']; return +urlid['id']; }),
-    //     switchMap(id => this.stateService.getTodoList(id))
-    //   );
-
-
-    
-
-      // this.todoList$ = listid$.pipe(
-    //     switchMap(id => this.stateService.getTodoList(id))
-    //   );
-
-    // this.listItems$ = this.todoList$.pipe(switchMap(listitems => this.stateService.getItemsFromList(listitems.id)))
-    // this.todoList$ = this.rout.params.pipe(
-    //     map(urlid => urlid['id']),
-    //     switchMap(id => this.stateService.getTodoList(id))
-    //   );
-
-    // this.todoList$.pipe(
-    //   map(listid => this.stateService.getItemsFromList(listid.id))
-    //   )
-    //   .subscribe(x => this.listItems$ = x);
-    // console.log(this.listeID)
-    // this.todoList$.subscribe(x=>console.log(x))
-    // this.listItems$.subscribe(x=>console.log(x))
   }
 
 

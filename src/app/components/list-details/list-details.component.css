@@ -77,3 +77,11 @@ button:hover {
 .delete:hover {
     background-color: rgb(255, 80, 80);
 }
+
+.cancle {
+    color: black;
+}
+
+.cancle:hover {
+    background-color: gray;
+}

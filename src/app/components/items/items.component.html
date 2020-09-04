@@ -2,7 +2,7 @@
 
 <div class="itemsList">
     <div *ngIf="listItems.length == 0" class="no-items-message">
-        You do not have any uncompleted todo items
+        You do not have uncompleted todo items
     </div>
 
     <div *ngIf="listItems.length > 0">
@@ -32,7 +32,7 @@
             </div>
             <div class="fields" >
                 <input type="text" formControlName="newItem">
-                <button type="submit" [disabled] ="!addItem.valid">+</button>
+                <button type="submit" [disabled] ="!addItem.valid"> + </button>
                 <ng-container *ngIf="addItem.get('newItem') as ctrl">
                     <ng-container *ngIf="ctrl.errors as errors">
                         <div *ngIf="ctrl.touched" class="errors">

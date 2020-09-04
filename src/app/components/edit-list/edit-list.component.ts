@@ -1,12 +1,13 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { map, switchMap } from 'rxjs/operators';
-import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
 
 import { StateService } from 'src/app/core/services/state-srvices.service';
 import { FormDataService } from 'src/app/core/services/form-data.service';
 import { IconsColors } from 'src/app/core/models/IconsColor.model';
 import { WordsValidators } from 'src/app/core/MyValidators/words-validator';
+import { TodoList } from 'src/app/core/models/TodoList.model';
 
 
 
@@ -23,28 +24,13 @@ export class EditListComponent implements OnInit {
   public colors = IconsColors.colors;
 
   public editForm: FormGroup;
-
-  // editForm = this.fb.group({
-  //   caption: ['', 
-  //     Validators.required,
-  //     Validators.maxLength(15),
-  //     (ctrl) => this.formData.validateCaption(ctrl)
-  //   ],
-  //   description: ['',
-  //     Validators.required,
-  //     Validators.maxLength(60),
-  //     WordsValidators.minWords(10)
-  //   ],
-  //   icon: ['',Validators.required],
-  //   color: ['',Validators.required]
-  // });
  
 
   constructor(
     private rout: ActivatedRoute, 
     private stateService: StateService,
     private formData: FormDataService,
-    private fb: FormBuilder
+    private nav: Router
   ) { }
 
   ngOnInit(): void {
@@ -64,7 +50,7 @@ export class EditListComponent implements OnInit {
 
 
   buildEditForm() {
-
+    
     this.editForm = new FormGroup ({
       caption: new FormControl(this.list.caption, [
         Validators.required,
@@ -77,7 +63,7 @@ export class EditListComponent implements OnInit {
         Validators.required,
         WordsValidators.minWords(10)
       ]),
-      icon: new FormControl(this.list.icon,Validators.required),
+      image_url: new FormControl(this.list.image_url,Validators.required),
       color: new FormControl(this.list.color,Validators.required)
     });
     
@@ -91,14 +77,16 @@ export class EditListComponent implements OnInit {
       this.stateService.addList(
         this.list.caption,
         this.list.description,
-        this.list.icon,
+        this.list.image_url,
         this.list.color
       );
     } else {
-      this.stateService.ModifyList(this.editForm.value);
+      let editedList: TodoList = {...this.list, id:this.ID};
+      this.stateService.ModifyList(editedList);
     }
 
     this.editForm.reset();
+    this.nav.navigate(['/lists']);
   }
 
 }

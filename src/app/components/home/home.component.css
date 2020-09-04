@@ -5,7 +5,6 @@
 
 .first-strip {
     justify-content: center;
-    /* padding: 25px; */
     background-color: var(--p900);
     color: var(--p100);
 }
@@ -38,7 +37,6 @@
 button {
     border: 1px solid darkgray;
     border-radius: 30px;
-    /* margin: 20px; */
     width: 150px;
     margin: 14px;
     margin-top: 10px;

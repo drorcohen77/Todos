@@ -1,6 +1,5 @@
 :host {
     display: grid;
-    grid-template-rows: 1 auto auto;
 }
 
 nav p{

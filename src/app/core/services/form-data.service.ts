@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { AbstractControl, ValidationErrors } from '@angular/forms';
-import { Observable } from 'rxjs';
+
 import { TodoList } from '../models/TodoList.model';
 import { StateService } from './state-srvices.service';
 
@@ -24,17 +24,10 @@ export class FormDataService {
 
     if (typeof(val) !== 'string') return null;
 
-    // const available = await this.isCaptionAvailble(val);
     const available = await this.lists$.some(list => list.caption === val);
     
     if (!available) return null;
     return {'captionAvailable': true}
   }
-
-  // async isCaptionAvailble(caption: string): Promise<boolean> {
-  //   let captions: string[] = []; 
-  //   this.lists$.map(list => captions.push(list.caption));
-    
-  //   return !captions.includes(caption);
-  // }
+  
 }

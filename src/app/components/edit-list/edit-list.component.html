@@ -39,7 +39,7 @@
 
                     <div class="fields">
                         <label>Icon:</label>
-                        <select formControlName="icon">
+                        <select formControlName="image_url">
                             <ng-container>
                                 <option value="" disabled selected hidden>Select icon</option>
                                 <option *ngFor="let icon of icons" [value]="icon">{{icon}}</option>
@@ -80,8 +80,6 @@
     </form>
 </div>
 
-<!-- <pre>value: {{editForm.value | json}}</pre> -->
-<!-- <pre>errors: {{editForm.get('caption').errors | json}}</pre> -->
 
 
   

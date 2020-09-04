@@ -1,12 +1,13 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
+import { ListsGuard } from './core/guard/lists.guard';
+
 import { HomeComponent } from './components/home/home.component';
 import { TodoListsComponent } from './components/todo-lists/todo-lists.component';
 import { ItemsComponent } from './components/items/items.component';
 import { NotFoundComponent } from './components/not-found/not-found.component';
-import { ListDetailsComponent } from './components/list-details/list-details.component';
 import { EditListComponent } from './components/edit-list/edit-list.component';
-import { ListsGuard } from './core/guard/lists.guard';
+import { ListDetailsComponent } from './components/list-details/list-details.component';
 
 
 const routes: Routes = [

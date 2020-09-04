@@ -1,7 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { StateService } from 'src/app/core/services/state-srvices.service';
-import { TodoItem } from 'src/app/core/models/TodoItem.model';
-import { map } from 'rxjs/operators';
 import { Router } from '@angular/router';
 
 @Component({
