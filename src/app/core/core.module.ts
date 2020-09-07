@@ -3,11 +3,13 @@ import { RouterModule } from '@angular/router';
 import { UpperCaseFirstLetterPipe } from './pipes/upper-case-first-letter.pipe';
 
 import { NavbarComponent } from './components/navbar/navbar.component';
+import { NotFoundComponent } from './components/not-found/not-found.component';
 
 
 @NgModule({
   declarations: [
     NavbarComponent,
+    NotFoundComponent,
     UpperCaseFirstLetterPipe
   ],
   imports: [
@@ -15,6 +17,7 @@ import { NavbarComponent } from './components/navbar/navbar.component';
   ],
   exports: [
     NavbarComponent,
+    NotFoundComponent,
     UpperCaseFirstLetterPipe
   ],
   providers: []
