@@ -3,7 +3,9 @@ const router = express.Router();
 const todoItemsCtrl = require('../controller/todoItems.js');
 
 
-router.post('', todoItemsCtrl.createTodoItem);
+router.post('/create', todoItemsCtrl.createTodoItem);
+
+router.get('/fetch', todoItemsCtrl.fetchItems);
 
 
 

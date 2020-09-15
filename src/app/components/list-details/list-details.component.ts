@@ -19,7 +19,7 @@ export class ListDetailsComponent implements OnInit {
   public todoList$: Observable<TodoList>;
   public listItems$: Observable<TodoItem[]>;
   public delClicked: boolean = false;
-  public listeID: number;
+  public listeID: string;
 
 
   constructor(
@@ -31,7 +31,7 @@ export class ListDetailsComponent implements OnInit {
   ngOnInit(): void {
 
     const listid$ = this.rout.params.pipe(
-        map(urlid => +urlid['id'])
+        map(urlid => urlid['id'])
       );
       
     listid$.subscribe(id => this.listeID = id);
@@ -43,6 +43,8 @@ export class ListDetailsComponent implements OnInit {
     this.listItems$ = this.todoList$.pipe(
         switchMap(() => this.stateService.getItemsFromList(this.listeID))
       );
+
+      // this.listItems$.subscribe(items => console.log(items))
   }
 
 

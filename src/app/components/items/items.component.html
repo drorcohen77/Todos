@@ -9,7 +9,7 @@
         <ul *ngFor="let item of listItems">
             <li *ngIf="!item.isCompleted">
                 <div>
-                    <mat-icon (click)="onTurnCompleted(item.id)">check_box_outline_blank</mat-icon>
+                    <mat-icon (click)="onTurnCompleted(item._id)">check_box_outline_blank</mat-icon>
                 </div>
                 
                 <p class="caption not-completed">{{item.caption | upperCaseFirstLetter}}</p>
@@ -17,7 +17,7 @@
 
             <li *ngIf="item.isCompleted">
                 <div>
-                    <mat-icon (click)="onTurnCompleted(item.id)">check</mat-icon>
+                    <mat-icon (click)="onTurnCompleted(item._id)">check</mat-icon>
                 </div>
             
                 <p class="caption completed">{{item.caption | upperCaseFirstLetter}}</p>
@@ -32,7 +32,7 @@
             </div>
             <div class="fields" >
                 <input type="text" formControlName="newItem">
-                <button type="submit" [disabled] ="!addItem.valid"> + </button>
+                <button type="submit" [disabled]="!addItem.valid"> + </button>
                 <ng-container *ngIf="addItem.get('newItem') as ctrl">
                     <ng-container *ngIf="ctrl.errors as errors">
                         <div *ngIf="ctrl.touched" class="errors">

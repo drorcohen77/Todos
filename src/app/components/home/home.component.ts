@@ -20,15 +20,17 @@ export class HomeComponent implements OnInit {
   ngOnInit(): void {
 
     this.stateService.getAllTodoList().subscribe(lists => this.listsNum = lists.length);
-    this.stateService.getAllTodoItem().subscribe(items => this.itemsNum = items.length);
+    // this.stateService.getAllTodoItem().subscribe(items => this.itemsNum = items.length);
 
-    this.stateService.getAllTodoItem().subscribe(allItems => 
+    this.stateService.getAllTodoItem().subscribe(allItems => {
+      this.itemsNum = allItems.length;
+
       allItems.map((Item) => {          
-        if (Item.isCompleted == true) {
+        if (Item.isCompleted == false) {
           this.activeItems++;
         }
-      })
-    );
+      });
+    });
 
   }
 

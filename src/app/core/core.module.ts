@@ -4,6 +4,8 @@ import { UpperCaseFirstLetterPipe } from './pipes/upper-case-first-letter.pipe';
 
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { NotFoundComponent } from './components/not-found/not-found.component';
+import { HttpVariables } from './variables/http-url.variables';
+import { HttpClientModule } from '@angular/common/http';
 
 
 @NgModule({
@@ -13,13 +15,14 @@ import { NotFoundComponent } from './components/not-found/not-found.component';
     UpperCaseFirstLetterPipe
   ],
   imports: [
-      RouterModule
+      RouterModule,
+      HttpClientModule
   ],
   exports: [
     NavbarComponent,
     NotFoundComponent,
     UpperCaseFirstLetterPipe
   ],
-  providers: []
+  providers: [HttpVariables]
 })
 export class CoreModule { }

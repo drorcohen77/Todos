@@ -1,9 +1,12 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { map, tap } from 'rxjs/operators';
+import { HttpClient } from '@angular/common/http';
 
 import { TodoItem } from '../models/TodoItem.model';
 import { TodoList } from '../models/TodoList.model';
+import { HttpVariables } from '../variables/http-url.variables'
+import { listLazyRoutes } from '@angular/compiler/src/aot/lazy_routes';
 
 
 @Injectable({
@@ -11,70 +14,46 @@ import { TodoList } from '../models/TodoList.model';
 })
 export class StateService {
 
-  private todoList:TodoList[] = [
-    {
-      id: 1,
-      caption: 'one',
-      description: 'test1 t t t t t t t t t',
-      image_url: 'event',
-      color: 'black',
-    },
-    {
-      id: 2,
-      caption: 'two',
-      description: 'test2 t t t t t t t t t',
-      image_url: 'work',
-      color: 'red',
-    }
-  ];
-  private todoItem:TodoItem[] = [
-    {
-      id: 1,
-      caption: 'one',
-      listId: 1,
-      isCompleted: false
-    },
-    {
-      id: 2,
-      caption: 'two',
-      listId: 1,
-      isCompleted: true
-    },
-    {
-      id: 3,
-      caption: 'tree',
-      listId: 1,
-      isCompleted: true
-    },
-    {
-      id: 4,
-      caption: 'two',
-      listId: 2,
-      isCompleted: true
-    }
-  ];
+  private todoLists:TodoList[];
+  private todoItems:TodoItem[];
   
-  private readonly todolist$ = new BehaviorSubject<TodoList[]>(this.todoList);
+  private readonly todolist$ = new BehaviorSubject<TodoList[]>([]);
   readonly todolist = this.todolist$.asObservable();
-  private readonly todoitem$ = new BehaviorSubject<TodoItem[]>(this.todoItem);
+  private readonly todoitem$ = new BehaviorSubject<TodoItem[]>([]);
   readonly todoitem = this.todoitem$.asObservable();
 
 
-  constructor() {}
+  constructor(private http: HttpClient, private httpUrl: HttpVariables) {}
 
   getAllTodoList():Observable<TodoList[]> {
     
-    return this.todolist;
-  }
+    return this.http.get<TodoList[]>(this.httpUrl.fetchTodoLists)
+      .pipe(
+        tap(lists => {
+          this.todoLists = lists;
+          
+          this.todolist$.next(this.todoLists);
+        })
+      );
+  };
 
   getAllTodoItem():Observable<TodoItem[]> {
     
-    return this.todoitem;
-  }
+    return this.http.get<TodoItem[]>(this.httpUrl.fetchTodoItems)
+      .pipe(
+        tap(items => {
+          this.todoItems = items;
+          
+          this.todoitem$.next(this.todoItems);
+        })
+      )
+  };
 
-  getItemsFromList(listindex: number):Observable<TodoItem[]> {
+
+  getItemsFromList(listindex: string):Observable<TodoItem[]> {
     let listOfIndexItem:TodoItem[] = [];
-    return this.getAllTodoItem()
+
+    return this.todoitem
       .pipe(
         map(itemlist => {
           listOfIndexItem = itemlist.filter(item => item.listId == listindex);
@@ -82,47 +61,92 @@ export class StateService {
         })
       );
 
-  }
+    // return this.getAllTodoItem()
+    //   .pipe(
+    //     map(itemlist => {
+    //       listOfIndexItem = itemlist.filter(item => item.listId == listindex);
+    //     return listOfIndexItem;
+    //     })
+    //   );
+  };
 
-  getTodoList(id: number):Observable<TodoList> {
-    return this.getAllTodoList()
+
+  getTodoList(id: string):Observable<TodoList> {
+    return this.todolist
       .pipe(
         map(list => {
-          return list.find(item => item.id === id);
+          return list.find(item => item._id === id);
         })
       );
   }
 
-  getTodoItem(id: number):Observable<TodoItem> {
-    return this.getAllTodoItem()
+
+  getTodoItem(id: string):Observable<TodoItem> {
+    return this.todoitem
       .pipe(
         map(item => {
-          return item.find(itemobj => itemobj.id === id);
+          return item.find(itemobj => itemobj._id === id);
         })
       );
   }
 
 
 
-  async addList(caption: string, description: string, icon: string,color: string): Promise<number>{
-    let newID:number = Math.ceil(Math.random()*100);
-    let todoType = 'lists';
-    
-    this.createID(newID,todoType);
-    
-    let newList:TodoList = {
-      id: newID,
-      caption: caption,
-      description: description,
-      image_url: icon,
-      color: color
-    };
-  
-    let newTodoList = [...this.todoList, newList];
-    
-    this.todolist$.next(newTodoList);
+  async addList(caption: string, description: string, icon: string,color: string): Promise<string>{
 
-    return newList.id;
+    let newListID: string;
+    
+
+    return newListID = await this.http.post(
+      this.httpUrl.createTodoList, 
+      {
+        caption: caption,
+        description: description,
+        image_url: icon,
+        color: color
+      }
+    )
+    .toPromise().then((list: TodoList) => {
+      let newTodoList: TodoList[];
+      this.todolist.subscribe(lists => newTodoList = [...lists, list]);
+      this.todolist$.next(newTodoList);
+      return list._id;
+    });
+
+    
+    
+    
+    // return newListID;
+
+    // .subscribe((list: TodoList) => {
+    //   newListID = list._id;
+    // })
+    
+    
+    // .toPromise()
+    // .then(newList => console.log(newList))
+    // .pipe(
+    //   tap((list: TodoList) => console.log(list._id))
+    // );
+
+    // return newListID
+    // let newID:string = Math.ceil(Math.random()*100).toString();
+    // let todoType = 'lists';
+    
+    // this.createID(newID,todoType);
+    // let newList:TodoList = {
+    //   _id: newID,
+    //   caption: caption,
+    //   description: description,
+    //   image_url: icon,
+    //   color: color
+    // };
+  
+    // let newTodoList = [...this.todoList, newList];
+    
+    // this.todolist$.next(newTodoList);
+
+    // return newList._id;
   }
 
 
@@ -130,95 +154,135 @@ export class StateService {
     
     let listindex: number;
 
-    this.getAllTodoList()
+    await this.todolist
       .pipe(
         map(todolist => {
-          return todolist.findIndex(todolist => todolist.id === list.id);
+          return todolist.findIndex(todolist => todolist._id === list._id);
         })
       )
       .subscribe(listFound => listindex = listFound);
 
-    let newtodolist:TodoList[] = Object.assign([...this.todoList],{ [listindex]:list });
+    await this.http.put(this.httpUrl.modifyTodoList + list._id, list)
+      .subscribe(newlist => {
+        let newtodolist:TodoList[] = Object.assign([...this.todoLists],{ [listindex]:newlist });
+        this.todolist$.next(newtodolist);
+      });
+    // let newtodolist:TodoList[] = Object.assign([...this.todoLists],{ [listindex]:list });
 
-    this.todolist$.next(newtodolist);
+    // this.todolist$.next(newtodolist);
 
     return Promise.resolve();
   }
 
 
-  async AddTodoItem(listId: number, caption: string): Promise<number> {
-    let newID:number = Math.ceil(Math.random()*100);
-    let todoType = 'items';
+  async AddTodoItem(listId: string, caption: string): Promise<string> {
+    // let newID:string = Math.ceil(Math.random()*100).toString();
+    // let todoType = 'items';
 
-    this.createID(newID,todoType);
+    // this.createID(newID,todoType);
+    let newItemID: string;
 
-    let newItem: TodoItem = {
-      id: newID,
-      caption: caption,
-      listId: listId,
-      isCompleted: false
-    }
-    let newTodoItem = [...this.todoItem,newItem];
+    return newItemID = await this.http.post(
+      this.httpUrl.createTodoItem,
+      {
+        // _id: '',
+        caption: caption,
+        listId: listId,
+        isCompleted: false
+      }
+    )
+    .toPromise().then((item: TodoItem) => {
+      let newItem: TodoItem[];
+      this.todoitem.subscribe(items => newItem = [...items, item]);
+      this.todoitem$.next(newItem);
+      return item._id
+    });
+     
+    // let newTodoItem = [...this.todoItems,newItem];
 
-    this.todoitem$.next(newTodoItem);
+    // this.todoitem$.next(newTodoItem);
 
-    return newItem.id;
+    // return newItem._id;
   }
 
 
-  MarkAsCompleted(itemId): Promise<void> {
-    let item: TodoItem;
-    this.getAllTodoItem().pipe(
+  async MarkAsCompleted(itemId): Promise<void> { 
+    let item: TodoItem; 
+
+    await this.todoitem.pipe(
       map(items => {
-        return items.find(Item => Item.id === itemId)
+        return items.find(Item => Item._id === itemId);
       })
     )
     .subscribe(todoitem => item = todoitem);
     
     item.isCompleted? item.isCompleted = false : item.isCompleted = true;
+    let { isCompleted } = item; // destructing item: TodoItem object
 
-    let newTodoItem = [...this.todoItem, item];
-    this.todoitem$.next(newTodoItem);
-    
-    return Promise.resolve();
-  }
-
-
-  async DeleteList(listId: number): Promise<void> {
-    let listToBeDeleted = this.todoList.find(list => list.id === listId);
-    let index = this.todoList.indexOf(listToBeDeleted);
-
-    let newTodoList = this.todoList.splice(index,1);
-
-    let newTodoItem = this.todoItem.filter(item => {
-        return item.listId !== listId;
+    await this.http.put(
+        this.httpUrl.modifyTodoItem + item._id, 
+        { isCompleted } 
+      )
+      .subscribe((newItem) => {
+        let newTodoItem: TodoItem[] = Object.assign([...this.todoItems], { newItem });
+      // let newTodoItem: TodoItem[] = this.todoItems.map(items => items === item ? newItem : items);
+        this.todoitem$.next(newTodoItem);
     });
-
-    this.todolist$.next(newTodoList);
     
-    this.todoitem$.next(newTodoItem);
+    // let newTodoItem = [...this.todoItems, item];
+    // this.todoitem$.next(newTodoItem);
+    
     return Promise.resolve();
   }
 
 
-  private createID(newID: number, todoType: string) {
-    let listID: any;
+  async DeleteList(listId: string): Promise<void> {
+console.log(this.httpUrl.deleteTodoList + listId)
 
-    if (todoType === 'lists') {
-      listID = this.todoList.find(Id => Id.id === newID);
-    } else {
-      listID = this.todoItem.find(Id => Id.id === newID);
-    }
+    await this.http.delete(this.httpUrl.deleteTodoList + listId)
+      .subscribe(() => {
+        let newTodoList: TodoList[];
+        this.todolist.subscribe(list => newTodoList = list.filter(newlist => newlist._id !== listId));
+        this.todolist$.next(newTodoList);
 
-    if (listID == undefined) {
-      return newID;
-      
-    } else if (listID.id == newID) {
-      newID = Math.ceil(Math.random()*100);
-      this.createID(newID,todoType);
-    }
+        let newTodoItem: TodoItem[]; 
+        this.todoitem.subscribe(items => newTodoItem = items.filter(item => item.listId !== listId));
+        this.todoitem$.next(newTodoItem);
+    });
+    // let listToBeDeleted = this.todoLists.find(list => list._id === listId);
+    // let index = this.todoLists.indexOf(listToBeDeleted);
+
+    // let newTodoList = this.todoLists.splice(index,1);
+
+    // let newTodoItem = this.todoItems.filter(item => {
+    //     return item.listId !== listId;
+    // });
+
+    // this.todolist$.next(newTodoList);
     
-  }
+    // this.todoitem$.next(newTodoItem);
+    return Promise.resolve();
+  };
+
+
+  // private createID(newID: string, todoType: string) {
+  //   let listID: any;
+
+  //   if (todoType === 'lists') {
+  //     listID = this.todoLists.find(Id => Id._id === newID);
+  //   } else {
+  //     listID = this.todoItems.find(Id => Id._id === newID);
+  //   }
+
+  //   if (listID == undefined) {
+  //     return newID;
+      
+  //   } else if (listID.id == newID) {
+  //     newID = Math.ceil(Math.random()*100).toString();
+  //     this.createID(newID,todoType);
+  //   }
+    
+  // }
   
 }
 

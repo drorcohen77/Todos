@@ -15,7 +15,7 @@ export class ListsGuard implements CanActivate {
 
     canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean | UrlTree {
 
-        this.stateService.getAllTodoList().subscribe(allLists => this.lists = allLists);
+        this.stateService.todolist.subscribe(allLists => this.lists = allLists);
         
         if (this.lists.length == 0) {
             this.router.navigate(['/lists/-1/edit']);

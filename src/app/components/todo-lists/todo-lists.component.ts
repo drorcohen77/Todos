@@ -14,9 +14,9 @@ export class TodoListsComponent implements OnInit {
 
   constructor(private stateService: StateService) { }
 
-  ngOnInit(): void {
+  async ngOnInit() {
 
-    this.stateService.getAllTodoList().subscribe(allLists => this.lists = allLists);
+    await this.stateService.todolist.subscribe(allLists => this.lists = allLists);
   }
 
 }

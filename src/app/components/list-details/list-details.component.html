@@ -3,18 +3,18 @@
         Lists
         <span> > </span>
     </p>
-    <p [ngStyle]="{'color': (todoList$ | async).color}">{{(todoList$ | async).caption | upperCaseFirstLetter}}</p>
+    <p *ngIf="(todoList$ | async) as todolist" [ngStyle]="{'color': todolist.color}">{{todolist.caption | upperCaseFirstLetter}}</p>
 </div>
 
 <div class="container">
     <div class="items">
-        <div class="icon" [ngStyle]="{'color':(todoList$ | async).color}">
-            <mat-icon>{{(todoList$ | async).image_url}}</mat-icon>
+        <div *ngIf="(todoList$ | async) as todolist" class="icon" [ngStyle]="{'color': todolist.color}">
+            <mat-icon>{{todolist.image_url}}</mat-icon>
         </div>
 
         <div *ngIf="!delClicked" class="caption">
-            <div class="discription">
-                {{(todoList$ | async).description | upperCaseFirstLetter}}
+            <div *ngIf="(todoList$ | async) as todolist" class="discription">
+                {{todolist.description | upperCaseFirstLetter}}
             </div>
 
             <div class="buttons">
@@ -25,7 +25,7 @@
         </div>
 
         <div *ngIf="delClicked">
-            <div class="discription">
+            <div *ngIf="(todoList$ | async) !=undefined" class="discription">
                 Are sure you want to delete {{(todoList$ | async).caption | upperCaseFirstLetter}} list?
             </div>
 

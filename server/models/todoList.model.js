@@ -4,9 +4,9 @@ const Schema = mongoose.Schema;
 
 
 const TodoList = new Schema({
-    id: {
-        type: Number
-    },
+    // id: {
+    //     type: Number
+    // },
     caption: {
         type: String,
         require: "Caption is Required",

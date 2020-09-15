@@ -1,5 +1,5 @@
 export interface TodoList {
-    id: number;
+    _id: string;
     caption: string;
     description: string;
     image_url: string;

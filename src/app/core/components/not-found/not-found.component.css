@@ -2,7 +2,6 @@
     padding: 20px;
     margin: 0px;
     display: flex;
-    /* flex-direction: column; */
     justify-content: center;
     background-color: rgb(247, 247, 247);
 }

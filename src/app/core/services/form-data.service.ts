@@ -14,7 +14,7 @@ export class FormDataService {
 
   constructor(private stateService: StateService) { 
 
-    this.stateService.getAllTodoList()
+    this.stateService.todolist
       .subscribe(allLists => this.lists$ = allLists);
   }
 

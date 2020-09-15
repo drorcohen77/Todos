@@ -3,21 +3,21 @@ const Schema = mongoose.Schema;
 
 
 const ItemsList = new Schema({
-    id: {
-        type: Number
-    },
+    // id: {
+    //     type: Number
+    // },
     caption: {
         type: String,
         required: true
     },
-    listId: {
-        type: Number
-    },
+    // listId: {
+    //     type: Number
+    // },
     isCompleted: {
         type: Boolean,
         required: true
     },
-    listID: {
+    listId: {
         type: Schema.Types.ObjectId, ref: 'TodoList'
     }
 

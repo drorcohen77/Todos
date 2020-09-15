@@ -16,20 +16,20 @@ export class ItemsComponent implements OnInit {
   @Input() ListeID;
   @Input() ListItems$;
 
-  public listItems: TodoItem[];
+  public listItems: TodoItem[] =[];
   public addItem: FormGroup;
   public activeItems: any;
 
   
   constructor(private stateService: StateService) { }
 
-  ngOnInit(): void {
+  async ngOnInit() {
     
     if (this.ListItems$ !== undefined) {
       this.ListItems$.subscribe(items => this.listItems = items);
       this.buildAddItem();
     } else {
-      this.stateService.getAllTodoItem().subscribe(todoItems => 
+      this.stateService.todoitem.subscribe(todoItems => 
         this.listItems = todoItems.filter(activeItems => activeItems.isCompleted === false))
     }
 
@@ -55,11 +55,11 @@ export class ItemsComponent implements OnInit {
 
   onSubmit() {
     
-    if (this.listItems.length > 0) { 
-      this.stateService.AddTodoItem(this.listItems[0].listId, this.addItem.value['newItem']);
-    } else {
+    // if (this.listItems.length > 0) { 
+    //   this.stateService.AddTodoItem(this.listItems[0].listId, this.addItem.value['newItem']);
+    // } else {
       this.stateService.AddTodoItem(this.ListeID, this.addItem.value['newItem']);
-    }
+    // }
 
     this.addItem.reset();
   }

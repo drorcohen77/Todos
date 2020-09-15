@@ -2,7 +2,7 @@
 <div class="all-lists">
     <div class="list"
          *ngFor="let list of lists" 
-         routerLink="/lists/{{list.id}}" 
+         routerLink="/lists/{{list._id}}" 
          [ngStyle]="{'color': list.color}"
     >
         <div class="icon">

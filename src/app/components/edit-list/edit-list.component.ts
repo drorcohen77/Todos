@@ -5,7 +5,7 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 
 import { StateService } from 'src/app/core/services/state-srvices.service';
 import { FormDataService } from 'src/app/core/services/form-data.service';
-import { IconsColors } from 'src/app/core/models/IconsColor.model';
+import { IconsColors } from '../../core/variables/IconsColorvariables';
 import { WordsValidators } from 'src/app/core/MyValidators/words-validator';
 import { TodoList } from 'src/app/core/models/TodoList.model';
 
@@ -19,7 +19,7 @@ import { TodoList } from 'src/app/core/models/TodoList.model';
 export class EditListComponent implements OnInit {
 
   public list: any;
-  public ID: number;
+  public ID: string;
   public icons = IconsColors.icons;
   public colors = IconsColors.colors;
 
@@ -36,12 +36,12 @@ export class EditListComponent implements OnInit {
   ngOnInit(): void {
 
     this.rout.params.pipe(
-        map(listid => this.ID = +listid['id']), // to extract the ':id' from the "/lists/:id/edit" url
+        map(listid => this.ID = listid['id']), // to extract the ':id' from the "/lists/:id/edit" url
         switchMap( id => this.stateService.getTodoList(id) ) // get from service the a list by id and switching the return from id: Observable to list: Observable 
       )
       .subscribe(reslist => this.list = reslist); // subscribe to extract list: TodoList from Observable
 
-    if (this.ID === -1) {
+    if (+this.ID === -1) {
       this.list = '';
     }
 
@@ -70,18 +70,19 @@ export class EditListComponent implements OnInit {
   }
 
 
-  onSubmit() {
+  async onSubmit() {
     this.list = this.editForm.value;
 
-    if (this.ID === -1) {
-      this.stateService.addList(
+    if (+this.ID === -1) {
+      await this.stateService.addList(
         this.list.caption,
         this.list.description,
         this.list.image_url,
         this.list.color
       );
     } else {
-      let editedList: TodoList = {...this.list, id:this.ID};
+      let editedList: TodoList = {...this.list, _id: this.ID};
+      console.log(editedList)
       this.stateService.ModifyList(editedList);
     }
 
