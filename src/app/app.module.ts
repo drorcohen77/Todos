@@ -5,6 +5,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatIconModule } from '@angular/material/icon';
 import { MatSelectModule } from '@angular/material/select';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 
 import { CoreModule } from './core/core.module';
 import { AppComponent } from './app.component';
@@ -31,6 +32,7 @@ import { ListDetailsComponent } from './components/list-details/list-details.com
     BrowserAnimationsModule,
     MatIconModule,
     MatSelectModule,
+    MatSlideToggleModule,
     ReactiveFormsModule
   ],
   providers: [],

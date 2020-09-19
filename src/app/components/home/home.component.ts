@@ -44,6 +44,7 @@ export class HomeComponent implements OnInit {
   }
 
   gotoitems() {
+    this.stateService.isItemComponent = true;
     this.nav.navigate(['/','items']);
   }
 }

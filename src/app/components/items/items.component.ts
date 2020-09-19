@@ -4,6 +4,13 @@ import { Validators, FormGroup, FormControl } from '@angular/forms';
 import { StateService } from 'src/app/core/services/state-srvices.service';
 import { WordsValidators } from '../../core/MyValidators/words-validator'
 import { TodoItem } from 'src/app/core/models/TodoItem.model';
+import { TodoList } from 'src/app/core/models/TodoList.model';
+
+
+interface itemsToList {
+  listId: string;
+  listCaption: string;
+};
 
 
 @Component({
@@ -19,19 +26,29 @@ export class ItemsComponent implements OnInit {
   public listItems: TodoItem[] =[];
   public addItem: FormGroup;
   public activeItems: any;
-
+  public sortList: boolean = false;
+  public sortedList: TodoItem[];
+  public todoListCaption: itemsToList;
+  public ItemComponent: boolean;
   
   constructor(private stateService: StateService) { }
 
   async ngOnInit() {
-    
+    this.ItemComponent = this.stateService.isItemComponent;
+
     if (this.ListItems$ !== undefined) {
       this.ListItems$.subscribe(items => this.listItems = items);
       this.buildAddItem();
     } else {
       this.stateService.todoitem.subscribe(todoItems => 
-        this.listItems = todoItems.filter(activeItems => activeItems.isCompleted === false))
-    }
+        this.listItems = todoItems.filter(activeItems => activeItems.isCompleted === false));
+        
+    };
+    this.stateService.todolist.subscribe(todolists => 
+      console.log(todolists)
+    );
+    // this.listItems
+    // this.todoListCaption. 
 
   }
 
@@ -47,6 +64,25 @@ export class ItemsComponent implements OnInit {
       )
     });
   }
+
+
+  onSortItems() {
+    this.sortedList = [];
+    !this.sortList? this.sortList = true : this.sortList = false;
+    
+    this.stateService.todolist.subscribe(list => {
+      let tempList: TodoItem[];
+      
+      list.map(item => {
+        tempList = this.listItems.filter(listItem => listItem.listId === item._id);
+        this.sortedList = this.sortedList.concat(tempList);
+        // sortedList = [...sortedList,...tempList];
+        console.log(this.sortedList)
+      })
+    });
+
+  }
+
 
   onTurnCompleted(itemId: number){
 

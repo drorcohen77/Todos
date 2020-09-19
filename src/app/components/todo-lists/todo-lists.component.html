@@ -1,26 +1,110 @@
 <p class="bread-cramb">Lists</p>
+
+<div class="view_list_grid">
+    <span>list</span>
+    <mat-icon class="view_list" [ngStyle]="{'color': 'gray'}">view_list</mat-icon>
+    <mat-slide-toggle (click)="onViewList()"></mat-slide-toggle>
+    <span>Grid</span>
+    <mat-icon class="view_module" [ngStyle]="{'color': iconColor}">view_module</mat-icon>
+</div>
+
 <div class="all-lists">
-    <div class="list"
+
+    <div class="list" *ngIf="list_view">
+        <div
+            *ngFor="let list of lists" 
+            routerLink="/lists/{{list._id}}" 
+            [ngStyle]="{'color': list.color}"
+            class="list_items" 
+        >
+            <div class="icon">
+                <mat-icon>{{list.image_url}}</mat-icon>
+            </div>
+            <div>
+                {{list.caption | upperCaseFirstLetter}}
+            </div>
+        </div>
+
+        <div class="list_items" routerLink="/lists/-1/edit">
+            <div class="icon">
+                <mat-icon class="mat-icon">add_circle_outline</mat-icon>
+            </div>
+            <div>
+                New list
+            </div>
+        </div>
+        
+    </div>
+
+    <div class="grid" *ngIf="!list_view">
+        <div
+            *ngFor="let list of lists" 
+            routerLink="/lists/{{list._id}}" 
+            [ngStyle]="{'color': list.color}"
+            class="grid_items" 
+        >
+            <div class="icon">
+                <mat-icon>{{list.image_url}}</mat-icon>
+            </div>
+            <div>
+                {{list.caption | upperCaseFirstLetter}}
+            </div>
+        </div>
+
+        <div class="grid_items" routerLink="/lists/-1/edit">
+            <div class="icon">
+                <mat-icon class="mat-icon">add_circle_outline</mat-icon>
+            </div>
+            <div>
+                New list
+            </div>
+        </div>
+    </div>
+    
+    <!-- <div 
          *ngFor="let list of lists" 
          routerLink="/lists/{{list._id}}" 
          [ngStyle]="{'color': list.color}"
     >
-        <div class="icon">
-            <mat-icon>{{list.image_url}}</mat-icon>
+        <div *ngIf="!list_view" class="grid">
+            <div class="icon">
+                <mat-icon>{{list.image_url}}</mat-icon>
+            </div>
+            <div>
+                {{list.caption | upperCaseFirstLetter}}
+            </div>
         </div>
-        <div>
-            {{list.caption | upperCaseFirstLetter}}
+
+        <div *ngIf="list_view" class="list">
+            <div class="icon">
+                <mat-icon>{{list.image_url}}</mat-icon>
+            </div>
+            <div>
+                {{list.caption | upperCaseFirstLetter}}
+            </div>
         </div>
+        
     </div>
 
-    <div class="list" routerLink="/lists/-1/edit">
-        <div class="icon">
-            <mat-icon class="mat-icon">add_circle_outline</mat-icon>
+    <div routerLink="/lists/-1/edit">
+        <div *ngIf="!list_view"  class="grid">
+            <div class="icon">
+                <mat-icon class="mat-icon">add_circle_outline</mat-icon>
+            </div>
+            <div>
+                New list
+            </div>
         </div>
-        <div>
-            New list
+
+        <div *ngIf="list_view"  class="list">
+            <div class="icon">
+                <mat-icon class="mat-icon">add_circle_outline</mat-icon>
+            </div>
+            <div>
+                New list
+            </div>
         </div>
-    </div>
+    </div> -->
 </div>
 
 

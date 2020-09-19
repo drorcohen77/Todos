@@ -35,19 +35,6 @@ const TodoList = new Schema({
     }]
 });
 
-// const todolist = new TodoList({
-//     id: 1,
-//       caption: 'one',
-//       description: 'test1 t t t t t t t t t',
-//       image_url: 'event',
-//       color: 'black',
-// })
 
-// todolist.save().then(() => {
-//     console.log(todolist)
-//     return res.json({'todolist saved': true});
-// }).catch((error) => {
-//     console.log('Error', error)
-// })
 
 module.exports = mongoose.model('TodoList', TodoList);

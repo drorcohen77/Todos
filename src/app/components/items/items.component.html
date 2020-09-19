@@ -5,8 +5,15 @@
         You do not have uncompleted todo items
     </div>
 
-    <div *ngIf="listItems.length > 0">
-        <ul *ngFor="let item of listItems">
+    <div class="view_list_grid" *ngIf="ItemComponent">
+        <span>Sort Items</span>
+        <button (click)="onSortItems()"><mat-icon class="view_list">sort</mat-icon></button>
+        <!-- <span>Grid</span>
+        <mat-icon class="view_module">view_module</mat-icon> -->
+    </div>
+
+    <div *ngIf="listItems.length > 0 && !sortList">
+        <ul *ngFor="let item of listItems" >
             <li *ngIf="!item.isCompleted">
                 <div>
                     <mat-icon (click)="onTurnCompleted(item._id)">check_box_outline_blank</mat-icon>
@@ -22,10 +29,34 @@
             
                 <p class="caption completed">{{item.caption | upperCaseFirstLetter}}</p>
             </li>
+            
+            <p *ngIf="ItemComponent" class="item_in_list">test</p>
         </ul>
     </div>
 
-    <div *ngIf="this.ListItems$ !== undefined">
+    <div *ngIf="sortList">
+        <ul *ngFor="let item of sortedList">
+            <li *ngIf="!item.isCompleted">
+                <div>
+                    <mat-icon (click)="onTurnCompleted(item._id)">check_box_outline_blank</mat-icon>
+                </div>
+                
+                <p class="caption not-completed">{{item.caption | upperCaseFirstLetter}}</p>
+            </li>
+
+            <li *ngIf="item.isCompleted">
+                <div>
+                    <mat-icon (click)="onTurnCompleted(item._id)">check</mat-icon>
+                </div>
+            
+                <p class="caption completed">{{item.caption | upperCaseFirstLetter}}</p>
+            </li>
+
+            <p *ngIf="ItemComponent" class="item_in_list">test</p>
+        </ul>
+    </div>
+
+    <div *ngIf="ListItems$ !== undefined">
         <form class="form" [formGroup]="addItem" (ngSubmit)="onSubmit()">
             <div>
                 <mat-icon>check_box_outline_blank</mat-icon>

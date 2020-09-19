@@ -29,6 +29,7 @@ export class ListDetailsComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    // this.stateService.isItemComponent = true;
 
     const listid$ = this.rout.params.pipe(
         map(urlid => urlid['id'])

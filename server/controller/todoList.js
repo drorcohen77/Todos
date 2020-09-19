@@ -6,7 +6,7 @@ const TodoItems = require('../models/ItemsList.model.js');
 exports.createTodoList = async (req, res) => {
 
     const todoList = new TodoLists(req.body);
-
+console.log(todoList)
     try {
         await todoList.save().then(() => {
             res.status(201).send(todoList);
@@ -18,7 +18,7 @@ exports.createTodoList = async (req, res) => {
 
 
 exports.fetchLists = async (req, res) => {
-    
+    console.log('fetch lists')
     try {
         const todoList = await TodoLists.find({});
         res.status(201).send(todoList);
@@ -65,7 +65,7 @@ exports.deleteList = async (req, res) => {
         const deletedItems = await deleteListItems(listID);
         const todoList = await TodoLists.findByIdAndDelete(listID);
 
-        if(!todoList || !deletedItems) {
+        if(!todoList) {
             return res.status(404).send();
         }
 
@@ -81,6 +81,6 @@ function deleteListItems(id) {
     try {
         return TodoItems.deleteMany( {"listId": id} );
     } catch (err) {
-        return res.status(400).send(err);
+        return err;
     };
 };

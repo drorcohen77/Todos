@@ -6,7 +6,6 @@ import { HttpClient } from '@angular/common/http';
 import { TodoItem } from '../models/TodoItem.model';
 import { TodoList } from '../models/TodoList.model';
 import { HttpVariables } from '../variables/http-url.variables'
-import { listLazyRoutes } from '@angular/compiler/src/aot/lazy_routes';
 
 
 @Injectable({
@@ -21,6 +20,8 @@ export class StateService {
   readonly todolist = this.todolist$.asObservable();
   private readonly todoitem$ = new BehaviorSubject<TodoItem[]>([]);
   readonly todoitem = this.todoitem$.asObservable();
+
+  public isItemComponent: boolean = false; // indecation for entering item component to show items from witch list
 
 
   constructor(private http: HttpClient, private httpUrl: HttpVariables) {}

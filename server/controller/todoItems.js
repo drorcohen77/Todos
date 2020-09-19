@@ -1,10 +1,20 @@
 const TodoItems = require('../models/ItemsList.model.js');
+const TodoLists = require('../models/todoList.model.js');
 
 
 exports.createTodoItem = async (req, res) => {
     const todoItems = new TodoItems(req.body);
 
     try {
+
+        await TodoLists.findById(todoItems.listId)
+                    .populate('itemID')
+                    .exec(function(err,foundList) {
+                        foundList.itemID.push(todoItems);
+                        foundList.save();
+                        console.log(foundList)
+                    });
+        
         await todoItems.save().then(() => {
             res.status(201).send(todoItems);
         });
@@ -23,6 +33,17 @@ exports.fetchItems = async (req, res) => {
         res.status(500).send(err);
     };
 };
+
+
+// function addItemToList(listID) {
+//     const list = TodoLists.findById(listID);
+// console.log(list)
+//     try {
+//         list.populate('ItemsList').exec();
+//     } catch(err) {
+//         return err;
+//     };
+// };
 
 
 // exports.modifyItems = async (req, res) => {
