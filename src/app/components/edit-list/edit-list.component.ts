@@ -2,13 +2,13 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { map, switchMap } from 'rxjs/operators';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { Subscription } from 'rxjs';
 
 import { StateService } from 'src/app/core/services/state-srvices.service';
 import { FormDataService } from 'src/app/core/services/form-data.service';
 import { IconsColors } from '../../core/variables/IconsColorvariables';
 import { WordsValidators } from 'src/app/core/MyValidators/words-validator';
 import { TodoList } from 'src/app/core/models/TodoList.model';
-import { Subscription } from 'rxjs';
 
 
 

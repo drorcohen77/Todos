@@ -3,16 +3,11 @@ const Schema = mongoose.Schema;
 
 
 const ItemsList = new Schema({
-    // id: {
-    //     type: Number
-    // },
+
     caption: {
         type: String,
         required: true
     },
-    // listId: {
-    //     type: Number
-    // },
     isCompleted: {
         type: Boolean,
         required: true

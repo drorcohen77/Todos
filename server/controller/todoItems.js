@@ -79,13 +79,7 @@ exports.markUncompletedItems = async (req, res) => {
     try {
         const todoList = await TodoLists.findById(listID);
         console.log(todoList)
-        // const updatedItems;
         todoList.itemID = await TodoItems.updateMany({'isCompleted': false}, {'$set':{'isCompleted': true}});
-        
-        // const updatedItems = await todoList.itemID.updateMany({'isCompleted': false}, {'$set':{'isCompleted': true}});
-        // console.log(updatedItems)
-        // unCompletedItems.map(item => TodoItems.)
-        // todoList.itemID.map(item => item._id === unCompletedItems._id? )
         console.log(todoList.itemID)
         res.status(201).send(todoList.itemID);
     } catch (err) {

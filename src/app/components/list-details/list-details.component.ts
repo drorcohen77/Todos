@@ -29,15 +29,10 @@ export class ListDetailsComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    // this.stateService.isItemComponent = true;
 
     const listid$ = this.rout.params.pipe(
         map(urlid => this.listeID = urlid['id'])
       );
-      // .subscribe(id => this.listeID = id);
-
-      // listid$.subscribe(id => console.log(id));
-    // listid$.subscribe(id => this.listeID = id);
 
     this.todoList$ = listid$.pipe(
         switchMap(id => this.stateService.getTodoList(id))
@@ -47,7 +42,6 @@ export class ListDetailsComponent implements OnInit {
         switchMap(() => this.stateService.getItemsFromList(this.listeID))
       );
 
-      // this.listItems$.subscribe(items => console.log(items))
   }
 
 

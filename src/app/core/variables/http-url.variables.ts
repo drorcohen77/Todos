@@ -1,6 +1,6 @@
 
 export class HttpVariables {
-    // public readonly _domain: string = 'http://localhost:3001';
+
     public readonly createTodoList: string = '/api/todoLists/create';
     public readonly fetchTodoLists: string = '/api/todoLists/fetch';
     public readonly modifyTodoList: string = '/api/todoLists/modify/';
@@ -11,5 +11,5 @@ export class HttpVariables {
     public readonly modifyTodoItem: string = '/api/todoItems/modify/';
     public readonly deleteTodoItem: string = '/api/todoItems/delete/';
 
-    public readonly checkAllItems: string = '/api/todoItems/check_all/'
+    public readonly checkAllItems: string = '/api/todoItems/check_all/';
 };

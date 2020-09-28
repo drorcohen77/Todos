@@ -1,6 +1,5 @@
 const express = require('express');
 const mongoose = require('mongoose');
-// const cors = require('cors');
 
 const todolistRoute = require('./routes/todolist.router.js');
 const todoItemsRoute = require('./routes/todoitems.router.js');
@@ -13,15 +12,7 @@ DB_connection();
 
 const app = express();
 
-// app.use(cors()); // using cors for corss origin request (exp. 4200 for client ). using proxy in 'proxy.config.json' file instead of cors.
-
 const PORT = process.env.PORT || 3001;
-
-// const corsOption = {
-//     origin: "*",
-//     optionsSuccessStatus:200
-// }
-// app.use(cors(corsOption))
 
 app.use(function(req, res, next) {
     res.header("Access-Control-Allow-Origin", "*"); // update to match the domain you will make the request from

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+
 import { StateService } from 'src/app/core/services/state-srvices.service';
 import { Router } from '@angular/router';
 
@@ -20,7 +21,6 @@ export class HomeComponent implements OnInit {
   ngOnInit(): void {
 
     this.stateService.getAllTodoList().subscribe(lists => this.listsNum = lists.length);
-    // this.stateService.getAllTodoItem().subscribe(items => this.itemsNum = items.length);
 
     this.stateService.getAllTodoItem().subscribe(allItems => {
       this.itemsNum = allItems.length;
