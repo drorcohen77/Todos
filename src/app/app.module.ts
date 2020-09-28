@@ -27,13 +27,13 @@ import { ListDetailsComponent } from './components/list-details/list-details.com
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule,
+    ReactiveFormsModule,
     CoreModule,
+    AppRoutingModule,
     BrowserAnimationsModule,
     MatIconModule,
     MatSelectModule,
-    MatSlideToggleModule,
-    ReactiveFormsModule
+    MatSlideToggleModule
   ],
   providers: [],
   bootstrap: [AppComponent]

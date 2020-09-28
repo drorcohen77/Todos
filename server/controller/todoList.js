@@ -33,8 +33,9 @@ exports.modifyList = async (req, res) => {
 
     const listID = req.params.id;
     const list = req.body;
-
+    console.log(list,listID,'test')
     const update = Object.keys(list);
+    console.log(update)
     const allwedUpdate = ['caption','description','image_url','color','_id'];
     const isValidUpdating = update.every((items) => allwedUpdate.includes(items));
     console.log(isValidUpdating,update)

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { map, switchMap } from 'rxjs/operators';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
@@ -8,6 +8,7 @@ import { FormDataService } from 'src/app/core/services/form-data.service';
 import { IconsColors } from '../../core/variables/IconsColorvariables';
 import { WordsValidators } from 'src/app/core/MyValidators/words-validator';
 import { TodoList } from 'src/app/core/models/TodoList.model';
+import { Subscription } from 'rxjs';
 
 
 
@@ -16,7 +17,9 @@ import { TodoList } from 'src/app/core/models/TodoList.model';
   templateUrl: './edit-list.component.html',
   styleUrls: ['./edit-list.component.css']
 })
-export class EditListComponent implements OnInit {
+export class EditListComponent implements OnInit, OnDestroy {
+
+  private sub: Subscription;
 
   public list: any;
   public ID: string;
@@ -35,7 +38,7 @@ export class EditListComponent implements OnInit {
 
   ngOnInit(): void {
 
-    this.rout.params.pipe(
+    this. sub = this.rout.params.pipe(
         map(listid => this.ID = listid['id']), // to extract the ':id' from the "/lists/:id/edit" url
         switchMap( id => this.stateService.getTodoList(id) ) // get from service the a list by id and switching the return from id: Observable to list: Observable 
       )
@@ -71,7 +74,7 @@ export class EditListComponent implements OnInit {
 
 
   async onSubmit() {
-    this.list = this.editForm.value;
+    this.list = <TodoList>this.editForm.value;
 
     if (+this.ID === -1) {
       await this.stateService.addList(
@@ -88,6 +91,14 @@ export class EditListComponent implements OnInit {
 
     this.editForm.reset();
     this.nav.navigate(['/lists']);
+  }
+
+
+  ngOnDestroy(): void {
+
+    if (this.sub) {
+      this.sub.unsubscribe();
+    }
   }
 
 }

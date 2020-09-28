@@ -1,18 +1,25 @@
-<p class="bread-cramb items">Active Items</p>
+<p class="bread-cramb page_name" *ngIf="ItemComponent">Active Items</p>
 
 <div class="itemsList">
     <div *ngIf="listItems.length == 0" class="no-items-message">
         You do not have uncompleted todo items
     </div>
 
-    <div class="view_list_grid" *ngIf="ItemComponent">
-        <span>Sort Items</span>
-        <button (click)="onSortItems()"><mat-icon class="view_list">sort</mat-icon></button>
+    <div class="view_list_grid" *ngIf="!ItemComponent">
+        
+        <div class="check_all">
+            <mat-icon (click)="checkAll()">check_box_outline_blank</mat-icon>
+            <span>Check All</span>
+        </div> 
+        <div class="sort">
+            <mat-icon (click)="onSortItems()">sort</mat-icon>
+            <span>Sort Items</span>
+        </div>
         <!-- <span>Grid</span>
         <mat-icon class="view_module">view_module</mat-icon> -->
     </div>
 
-    <div *ngIf="listItems.length > 0 && !sortList">
+    <div *ngIf="listItems.length > 0 && !sortList" class="items">
         <ul *ngFor="let item of listItems" >
             <li *ngIf="!item.isCompleted">
                 <div>
@@ -30,11 +37,11 @@
                 <p class="caption completed">{{item.caption | upperCaseFirstLetter}}</p>
             </li>
             
-            <p *ngIf="ItemComponent" class="item_in_list">test</p>
+            <p *ngIf="ItemComponent" class="item_in_list">List Name: <span [ngStyle]="{'color': item.listColor}">{{item.listCaption}}</span></p>
         </ul>
     </div>
 
-    <div *ngIf="sortList">
+    <div *ngIf="sortList" class="items">
         <ul *ngFor="let item of sortedList">
             <li *ngIf="!item.isCompleted">
                 <div>
@@ -52,11 +59,11 @@
                 <p class="caption completed">{{item.caption | upperCaseFirstLetter}}</p>
             </li>
 
-            <p *ngIf="ItemComponent" class="item_in_list">test</p>
+            <p *ngIf="ItemComponent" class="item_in_list">List Name: <span [ngStyle]="{'color': item.listColor}">{{item.listCaption}}</span></p>
         </ul>
     </div>
 
-    <div *ngIf="ListItems$ !== undefined">
+    <div *ngIf="ListItems$ !== undefined" class="items">
         <form class="form" [formGroup]="addItem" (ngSubmit)="onSubmit()">
             <div>
                 <mat-icon>check_box_outline_blank</mat-icon>

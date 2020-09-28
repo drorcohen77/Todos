@@ -15,8 +15,8 @@ import { HttpClientModule } from '@angular/common/http';
     UpperCaseFirstLetterPipe
   ],
   imports: [
-      RouterModule,
-      HttpClientModule
+    HttpClientModule,
+    RouterModule
   ],
   exports: [
     NavbarComponent,

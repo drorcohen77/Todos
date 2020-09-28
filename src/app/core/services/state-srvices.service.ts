@@ -13,8 +13,70 @@ import { HttpVariables } from '../variables/http-url.variables'
 })
 export class StateService {
 
-  private todoLists:TodoList[];
-  private todoItems:TodoItem[];
+  private todoLists:TodoList[] = [
+    // {
+    //     "itemID": [
+    //       {
+    //         "_id": "5f65ffd2d9e8f246187bebba",
+    //         "caption": "one",
+    //         "listId": "5f65f93b64210a1dd429814d",
+    //         "isCompleted": false
+    //       },
+    //       {
+    //           "_id": "5f660026d14ff802e06e05ef",
+    //           "caption": "two",
+    //           "listId": "5f65f93b64210a1dd429814d",
+    //           "isCompleted": true
+    //       },
+    //       {
+    //         "_id": "5f6758baf89a1ab4882d4e0f",
+    //         "caption": "three",
+    //         "listId": "5f65f93b64210a1dd429814d",
+    //         "isCompleted": false
+    //       }
+    //     ],
+    //     "_id": "5f65f93b64210a1dd429814d",
+    //     "caption": "List No 1",
+    //     "description": "test1 t t t t t t t t t",
+    //     "image_url": "event",
+    //     "color": "black"
+    // },
+    // {
+    //     "itemID": [
+    //       {
+    //       "_id": "5f6758baf89a1ab4882d4e0f",
+    //       "caption": "three",
+    //       "listId": "5f671089ffe87769f03fc6e6",
+    //       "isCompleted": false
+    //     }
+    //   ],
+    //     "_id": "5f671089ffe87769f03fc6e6",
+    //     "caption": "List No 2",
+    //     "description": "test two t t t t t t t t t",
+    //     "image_url": "work",
+    //     "color": "blue"
+    // }
+];
+  private todoItems:TodoItem[] = [
+    // {
+    //     "_id": "5f65ffd2d9e8f246187bebba",
+    //     "caption": "one",
+    //     "listId": "5f65f93b64210a1dd429814d",
+    //     "isCompleted": false
+    // },
+    // {
+    //     "_id": "5f660026d14ff802e06e05ef",
+    //     "caption": "two",
+    //     "listId": "5f65f93b64210a1dd429814d",
+    //     "isCompleted": false
+    // },
+    // {
+    //   "_id": "5f6758baf89a1ab4882d4e0f",
+    //   "caption": "three",
+    //   "listId": "5f671089ffe87769f03fc6e6",
+    //   "isCompleted": false
+    // }
+];
   
   private readonly todolist$ = new BehaviorSubject<TodoList[]>([]);
   readonly todolist = this.todolist$.asObservable();
@@ -27,6 +89,9 @@ export class StateService {
   constructor(private http: HttpClient, private httpUrl: HttpVariables) {}
 
   getAllTodoList():Observable<TodoList[]> {
+    // this.todolist$.next(this.todoLists);
+    // console.log(this.todolist)
+    // return this.todolist;
     
     return this.http.get<TodoList[]>(this.httpUrl.fetchTodoLists)
       .pipe(
@@ -39,6 +104,11 @@ export class StateService {
   };
 
   getAllTodoItem():Observable<TodoItem[]> {
+
+      // this.todoitem$.next(this.todoItems);
+  
+      // return this.todoitem;
+    
     
     return this.http.get<TodoItem[]>(this.httpUrl.fetchTodoItems)
       .pipe(
@@ -98,7 +168,7 @@ export class StateService {
     let newListID: string;
     
 
-    return newListID = await this.http.post(
+    return newListID = await this.http.post<TodoList>(
       this.httpUrl.createTodoList, 
       {
         caption: caption,
@@ -161,18 +231,20 @@ export class StateService {
           return todolist.findIndex(todolist => todolist._id === list._id);
         })
       )
+      // .toPromise()
       .subscribe(listFound => listindex = listFound);
-
-    await this.http.put(this.httpUrl.modifyTodoList + list._id, list)
-      .subscribe(newlist => {
+      console.log(this.httpUrl.modifyTodoList + list._id, list)
+    await this.http.put<TodoList>(this.httpUrl.modifyTodoList + list._id, list)
+      .pipe(tap(newlist => {
         let newtodolist:TodoList[] = Object.assign([...this.todoLists],{ [listindex]:newlist });
         this.todolist$.next(newtodolist);
-      });
+      }))
+      .toPromise();
     // let newtodolist:TodoList[] = Object.assign([...this.todoLists],{ [listindex]:list });
 
     // this.todolist$.next(newtodolist);
 
-    return Promise.resolve();
+    // return Promise.resolve();
   }
 
 
@@ -183,7 +255,7 @@ export class StateService {
     // this.createID(newID,todoType);
     let newItemID: string;
 
-    return newItemID = await this.http.post(
+    return newItemID = await this.http.post<TodoItem>(
       this.httpUrl.createTodoItem,
       {
         // _id: '',
@@ -192,7 +264,8 @@ export class StateService {
         isCompleted: false
       }
     )
-    .toPromise().then((item: TodoItem) => {
+    .toPromise()
+    .then((item: TodoItem) => {
       let newItem: TodoItem[];
       this.todoitem.subscribe(items => newItem = [...items, item]);
       this.todoitem$.next(newItem);
@@ -208,48 +281,113 @@ export class StateService {
 
 
   async MarkAsCompleted(itemId): Promise<void> { 
-    let item: TodoItem; 
+    let item: TodoItem;
+    let Itemindex: number; 
+    let updatedTodoItem: TodoItem[];
 
-    await this.todoitem.pipe(
-      map(items => {
-        return items.find(Item => Item._id === itemId);
-      })
-    )
-    .subscribe(todoitem => item = todoitem);
+    await this.todoitem.subscribe(items => {
+      item = items.find(Item => Item._id === itemId);
+      Itemindex = items.findIndex(item => item._id === itemId);
+    });
+
+    // await this.todoitem.pipe(
+    //   map(items => {
+    //     return items.find(Item => Item._id === itemId);
+    //   })
+    // )
+    // .subscribe(todoitem => item = todoitem);
     
     item.isCompleted? item.isCompleted = false : item.isCompleted = true;
     let { isCompleted } = item; // destructing item: TodoItem object
+console.log(this.httpUrl.modifyTodoItem + item._id, 
+  { isCompleted })
 
-    await this.http.put(
+  let itemsList:TodoItem[];
+  await this.todoitem.subscribe(items => itemsList = items);
+
+    await this.http.patch<TodoItem>(
         this.httpUrl.modifyTodoItem + item._id, 
         { isCompleted } 
       )
-      .subscribe((newItem) => {
-        let newTodoItem: TodoItem[] = Object.assign([...this.todoItems], { newItem });
+      .toPromise().then(updatedItem => {
+        console.log(updatedItem)
+        updatedTodoItem = Object.assign([...itemsList], { [Itemindex]:updatedItem });
+        this.todoitem$.next(updatedTodoItem);
+        // item = updatedItem
+      });
+      // await this.todoitem$.next(updatedTodoItem);
+      // {
+        
+        // let updatedTodoItem: TodoItem[] = Object.assign([...this.todoItems], { updatedItem });
+        // let updatedTodoItem: TodoItem[];
+        // let Itemindex: number;
+        
+          // Itemindex = items.findIndex(item => item._id === itemId);
+          // updatedTodoItem = Object.assign([...items], { [Itemindex]:item });
+          // this.todoitem$.next(updatedTodoItem);
+        
+        
       // let newTodoItem: TodoItem[] = this.todoItems.map(items => items === item ? newItem : items);
-        this.todoitem$.next(newTodoItem);
-    });
+    // });
     
     // let newTodoItem = [...this.todoItems, item];
     // this.todoitem$.next(newTodoItem);
     
+    // return Promise.resolve();
+  }
+
+
+  async onCompletedItems(uncompItems: TodoItem[], listId: string):Promise<void> {
+
+    let itemList: TodoItem[];
+    this.todoitem.subscribe(list => itemList = list);
+
+    await this.http.patch<TodoItem[]>(this.httpUrl.checkAllItems + listId, uncompItems).subscribe(() => {
+ 
+      itemList.map(itemInList => {
+        if (!itemInList.isCompleted) {
+          itemInList.isCompleted = true;
+        }
+      });
+
+        console.log(itemList)
+      this.todoitem$.next(itemList);
+    });
+    
     return Promise.resolve();
+    // .toPromise();
+    
+    // this.todoitem.subscribe(items => {
+    //   let turncompletedItems = 
+    //     items.filter(item => item.listId === listId).filter(unCompItem => !unCompItem.isCompleted? unCompItem.isCompleted = true : unCompItem);
+
+    //   let updatedList: TodoList; 
+    //   this.getTodoList(listId).subscribe(list => {
+    //     list.itemID = turncompletedItems;
+    //     updatedList = list;
+    //   });
+        
+    //   let newList: TodoList[];
+    //   this.todolist.subscribe(lists => newList = [...lists, updatedList ]);
+    //   this.todolist$.next(newList);
+    // });
+
   }
 
 
   async DeleteList(listId: string): Promise<void> {
 console.log(this.httpUrl.deleteTodoList + listId)
 
-    await this.http.delete(this.httpUrl.deleteTodoList + listId)
-      .subscribe(() => {
+    await this.http.delete<TodoList>(this.httpUrl.deleteTodoList + listId).toPromise();
+      // .subscribe(() => {
         let newTodoList: TodoList[];
-        this.todolist.subscribe(list => newTodoList = list.filter(newlist => newlist._id !== listId));
+        await this.todolist.subscribe(list => newTodoList = list.filter(newlist => newlist._id !== listId));
         this.todolist$.next(newTodoList);
 
         let newTodoItem: TodoItem[]; 
-        this.todoitem.subscribe(items => newTodoItem = items.filter(item => item.listId !== listId));
+        await this.todoitem.subscribe(items => newTodoItem = items.filter(item => item.listId !== listId));
         this.todoitem$.next(newTodoItem);
-    });
+    // });
     // let listToBeDeleted = this.todoLists.find(list => list._id === listId);
     // let index = this.todoLists.indexOf(listToBeDeleted);
 

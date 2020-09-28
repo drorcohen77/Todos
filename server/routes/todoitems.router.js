@@ -7,6 +7,10 @@ router.post('/create', todoItemsCtrl.createTodoItem);
 
 router.get('/fetch', todoItemsCtrl.fetchItems);
 
+router.patch('/modify/:itemid', todoItemsCtrl.modifyItem);
+
+router.patch('/check_all/:listid', todoItemsCtrl.markUncompletedItems);
+
 
 
 module.exports = router;

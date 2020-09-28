@@ -39,13 +39,13 @@
 
                     <div class="fields">
                         <label>Icon:</label>
-                        <select formControlName="image_url">
+                        <select formControlName="image_url" class="material-icons">
                             <ng-container>
                                 <option value="" disabled selected hidden>Select icon</option>
-                                <option *ngFor="let icon of icons" [value]="icon">{{icon}}</option>
+                                <option *ngFor="let icon of icons" [value]="icon" class="material-icons">{{icon}}</option>
                             </ng-container>
                         </select>
-                        <ng-container *ngIf="editForm.get('caption') as ctrl">
+                        <ng-container *ngIf="editForm.get('image_url') as ctrl">
                             <ng-container *ngIf="ctrl.errors as errors">
                                 <div class="errors" *ngIf="ctrl.touched">
                                     <span *ngIf="errors.required">Required!</span>
@@ -56,13 +56,13 @@
 
                     <div class="fields">
                         <label>Color:</label>
-                        <select formControlName="color">
+                        <select formControlName="color" [style.color]="editForm.get('color').value">
                             <ng-container>
                                 <option value="" disabled selected hidden>Select color</option>
                                 <option *ngFor="let color of colors" [value]="color" [ngStyle]="{'color': color}">{{color}}</option>
                             </ng-container>
                         </select>
-                        <ng-container *ngIf="editForm.get('caption') as ctrl">
+                        <ng-container *ngIf="editForm.get('color') as ctrl">
                             <ng-container *ngIf="ctrl.errors as errors">
                                 <div class="errors" *ngIf="ctrl.touched">
                                     <span *ngIf="errors.required">Required!</span>

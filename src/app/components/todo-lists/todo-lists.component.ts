@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { StateService } from 'src/app/core/services/state-srvices.service';
-import { Observable } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { TodoList } from 'src/app/core/models/TodoList.model';
 
 @Component({
@@ -8,8 +8,9 @@ import { TodoList } from 'src/app/core/models/TodoList.model';
   templateUrl: './todo-lists.component.html',
   styleUrls: ['./todo-lists.component.css']
 })
-export class TodoListsComponent implements OnInit {
+export class TodoListsComponent implements OnInit, OnDestroy {
 
+  private sub: Subscription;
   public lists: TodoList[] = [];
   public list_view: boolean = true;
   public iconColor: string = 'gray';
@@ -18,7 +19,7 @@ export class TodoListsComponent implements OnInit {
 
   async ngOnInit() {
 
-    await this.stateService.todolist.subscribe(allLists => this.lists = allLists);
+    this.sub = await this.stateService.todolist.subscribe(allLists => this.lists = allLists);
   }
 
 
@@ -34,4 +35,11 @@ export class TodoListsComponent implements OnInit {
   };
 
   
+  ngOnDestroy() {
+    if (this.sub) {
+      this.sub.unsubscribe();
+    }
+  }
+
+
 }

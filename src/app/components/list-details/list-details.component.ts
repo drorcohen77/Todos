@@ -32,10 +32,12 @@ export class ListDetailsComponent implements OnInit {
     // this.stateService.isItemComponent = true;
 
     const listid$ = this.rout.params.pipe(
-        map(urlid => urlid['id'])
+        map(urlid => this.listeID = urlid['id'])
       );
-      
-    listid$.subscribe(id => this.listeID = id);
+      // .subscribe(id => this.listeID = id);
+
+      // listid$.subscribe(id => console.log(id));
+    // listid$.subscribe(id => this.listeID = id);
 
     this.todoList$ = listid$.pipe(
         switchMap(id => this.stateService.getTodoList(id))
@@ -69,4 +71,6 @@ export class ListDetailsComponent implements OnInit {
   onCancleDelete() {
     this.delClicked = false;
   }
+
+
 }

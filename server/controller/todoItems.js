@@ -12,7 +12,6 @@ exports.createTodoItem = async (req, res) => {
                     .exec(function(err,foundList) {
                         foundList.itemID.push(todoItems);
                         foundList.save();
-                        console.log(foundList)
                     });
         
         await todoItems.save().then(() => {
@@ -35,44 +34,64 @@ exports.fetchItems = async (req, res) => {
 };
 
 
-// function addItemToList(listID) {
-//     const list = TodoLists.findById(listID);
-// console.log(list)
-//     try {
-//         list.populate('ItemsList').exec();
-//     } catch(err) {
-//         return err;
-//     };
-// };
+exports.modifyItem = async (req, res) => {
 
-
-// exports.modifyItems = async (req, res) => {
-
-//     const itemID = req.params.id;
-//     const item = req.body;
+    const itemID = req.params.itemid;
+    const item = req.body;
     
-//     const update = Object.keys(item);
-//     const allwedUpdate = ['caption','listId','isCompleted'];
-//     const isValidUpdating = update.every((items) => allwedUpdate.includes(items));
-//     console.log(isValidUpdating)
+    const update = Object.keys(item);
+    const allwedUpdate = 'isCompleted';
+    const isValidUpdating = update[0] === allwedUpdate? true : false;
     
-//     if (!isValidUpdating) {
-//         return res.status(400).send({ 'error':`Invalid property. Property '${update}' don't mach TodoItem Model!`});
-//     }
-// //     const itemIsCompleted = new TodoItems(req.body.isCompleted)
-// // console.log(itemID,item)
-//     try {
-//         const todoItem = await TodoItems.findByIdAndUpdate(itemID, item, {new: true, runValidators: true});
-//         if (!todoItem) {
-//             return res.status(404).send();
-//         }
+    if (!isValidUpdating) {
+        return res.status(400).send({ 'error':`Invalid property. Property '${update}' don't mach TodoItem Model!`});
+    }
 
-//         res.status(201).send(todoItem);
-//     } catch (err) {
-//         res.status(400).send(err);
-//     };
-// };
+    try {
+        const todoItem = await TodoItems.findByIdAndUpdate(itemID, item, {new: true, runValidators: true});
+        if (!todoItem) {
+            return res.status(404).send();
+        }
+        console.log(todoItem)
+        res.status(201).send(todoItem);
+    } catch (err) {
+        res.status(400).send(err);
+    };
+};
 
+
+exports.markUncompletedItems = async (req, res) => {
+
+    const listID = req.params.listid;
+    const unCompletedItems = req.body;
+
+    unCompletedItems.map(item => {
+        const update = Object.keys(item);
+        const allwedUpdate = 'isCompleted';
+        const isValidUpdating = update.includes(allwedUpdate); 
+
+        if (!isValidUpdating) {
+            return res.status(400).send({ 'error':`Invalid property. Property '${update}' don't mach TodoItem Model!`});
+        }
+    });
+    
+
+    try {
+        const todoList = await TodoLists.findById(listID);
+        console.log(todoList)
+        // const updatedItems;
+        todoList.itemID = await TodoItems.updateMany({'isCompleted': false}, {'$set':{'isCompleted': true}});
+        
+        // const updatedItems = await todoList.itemID.updateMany({'isCompleted': false}, {'$set':{'isCompleted': true}});
+        // console.log(updatedItems)
+        // unCompletedItems.map(item => TodoItems.)
+        // todoList.itemID.map(item => item._id === unCompletedItems._id? )
+        console.log(todoList.itemID)
+        res.status(201).send(todoList.itemID);
+    } catch (err) {
+        res.status(400).send(err);
+    }
+};
 
 
 

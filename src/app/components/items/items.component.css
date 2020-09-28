@@ -1,9 +1,56 @@
-.items {
+.view_list_grid {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+    width: 350px;
+    border-bottom: 1px solid gray;
+    padding-bottom: 10px;
+}
+
+/* .view_list_grid button {
+    margin-right: 10px;
+    width: 30px;
+    height: 29px;
+    font-size: 20px;
+    font-weight: 600;
+    background-color: var(--p400);
+    border-radius: 4px;
+    cursor: pointer;
+} */
+
+.view_list_grid mat-icon {
+    font-size: 25px;
+    width: 25px;
+}
+
+.check_all, .sort {
+    display: flex;
+    align-items: center;
+    margin-right: 50px;
+    cursor: pointer;
+} 
+
+/* .sort {
+    display: flex;
+    align-items: center;
+} */
+
+.view_list_grid mat-icon{
+    margin-right: 5px;
+    cursor: pointer;
+}
+
+.page_name {
     color: red;
+}
+
+.items {
+    padding-left: 20px;
 }
 
 .itemsList {
     padding: 20px;
+    padding-left: 30px;
     color: var(--p700);
 }
 
@@ -36,7 +83,7 @@ li {
     list-style: none;
     cursor: pointer;
     margin-bottom: 10px;
-    width: 200px;
+    width: 250px;
 }
 
 .caption {
@@ -54,7 +101,7 @@ li {
     text-decoration-color: red;
 }
 
-mat-icon {
+li mat-icon {
     margin-right: 5px;
 }
 
@@ -63,7 +110,19 @@ mat-icon {
 }
 
 .form mat-icon {
+    margin-right: 5px;
     padding-top: 2px;
+}
+
+.form button {
+    margin-left: 7px;
+    width: 30px;
+    height: 28px;
+    font-size: 20px;
+    font-weight: 600;
+    background-color: var(--p400);
+    border-radius: 4px;
+    cursor: pointer;
 }
 
 input {
@@ -74,14 +133,13 @@ input {
     padding-left: 6px;
 }
 
-button {
-    margin-left: 7px;
-    width: 30px;
-    height: 28px;
-    font-size: 20px;
-    font-weight: 600;
-    background-color: var(--p400);
-    border-radius: 4px;
-    cursor: pointer;
-}
+
+
+/* .item_in_list span {
+    color: red;
+} */
+
+/* .view_list_grid span {
+    padding-top: 5px;
+} */
 

@@ -1,6 +1,7 @@
 
 .router {
     cursor: pointer;
+    margin-right: 5px;
 }
 
 .items {
@@ -20,7 +21,7 @@
     width: 120px;
 }
 
-mat-icon{
+.icon mat-icon{
     font-size: 100px;
 }
 
@@ -85,3 +86,6 @@ button:hover {
 .cancle:hover {
     background-color: gray;
 }
+
+
+
