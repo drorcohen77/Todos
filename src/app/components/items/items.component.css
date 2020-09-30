@@ -117,3 +117,21 @@ input {
     padding-left: 6px;
 }
 
+@media screen and (max-width: 768px) {
+
+    .items {
+        padding-left: 0px;
+    }
+
+    .itemsList {
+        padding-left: 25px;
+    }
+
+    .item_in_list {
+        /* margin-left: 20px; */
+        font-size: 14px;
+        /* opacity: 0.5; */
+    }
+
+
+}

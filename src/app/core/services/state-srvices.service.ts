@@ -151,6 +151,7 @@ export class StateService {
 
 
   async MarkAsCompleted(itemId): Promise<void> { 
+
     let item: TodoItem;
     let Itemindex: number; 
     let updatedTodoItem: TodoItem[];
@@ -187,7 +188,7 @@ export class StateService {
     await this.http.patch<TodoItem[]>(this.httpUrl.checkAllItems + listId, uncompItems).subscribe(() => {
  
       itemList.map(itemInList => {
-        if (!itemInList.isCompleted) {
+        if (!itemInList.isCompleted && itemInList.listId === listId) {
           itemInList.isCompleted = true;
         }
       });

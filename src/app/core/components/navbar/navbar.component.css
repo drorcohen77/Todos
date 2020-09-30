@@ -9,6 +9,7 @@ nav p{
     color: var(--p100);
     font-size: 25px;
     font-weight: 300px;
+    cursor: pointer;
 }
 
 nav ul {

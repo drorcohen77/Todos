@@ -6,13 +6,15 @@ import { HttpClientModule } from '@angular/common/http';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { NotFoundComponent } from './components/not-found/not-found.component';
 import { HttpVariables } from './variables/http-url.variables';
+import { ShortListNamePipe } from './pipes/short-list-name.pipe';
 
 
 @NgModule({
   declarations: [
     NavbarComponent,
     NotFoundComponent,
-    UpperCaseFirstLetterPipe
+    UpperCaseFirstLetterPipe,
+    ShortListNamePipe
   ],
   imports: [
     HttpClientModule,

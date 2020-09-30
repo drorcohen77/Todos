@@ -66,6 +66,7 @@ exports.markUncompletedItems = async (req, res) => {
     const unCompletedItems = req.body;
 
     unCompletedItems.map(item => {
+        console.log(item)
         const update = Object.keys(item);
         const allwedUpdate = 'isCompleted';
         const isValidUpdating = update.includes(allwedUpdate); 
@@ -77,11 +78,23 @@ exports.markUncompletedItems = async (req, res) => {
     
 
     try {
-        const todoList = await TodoLists.findById(listID);
-        console.log(todoList)
-        todoList.itemID = await TodoItems.updateMany({'isCompleted': false}, {'$set':{'isCompleted': true}});
-        console.log(todoList.itemID)
-        res.status(201).send(todoList.itemID);
+        // const todoList = await TodoLists.findById(listID);
+        // todoList.itemID = [];
+        const updatedItems = [];
+
+        unCompletedItems.map(item => {
+            // item.isCompleted = true;
+            TodoItems.findByIdAndUpdate(item._id, {'$set':{'isCompleted': true}}, {new: true, runValidators: true},(err,updatedItem) => {
+                if (err) return res.status(400).send(err)
+                updatedItems.push(updatedItem);
+
+            });
+            // updatedItems.push(updatedItem);
+            // todoList.itemID.push(updatedItem);
+        })
+        // todoList.itemID = await TodoItems.updateMany({'isCompleted': false}, {'$set':{'isCompleted': true}});
+        // console.log(todoList.itemID)
+        res.status(201).send(updatedItems);
     } catch (err) {
         res.status(400).send(err);
     }
