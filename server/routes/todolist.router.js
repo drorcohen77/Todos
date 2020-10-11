@@ -2,7 +2,6 @@ const express = require('express');
 const router = new express.Router();
 
 const todoListCtrl = require('../controller/todoList.js');
-const TodoLists = require('../models/todoList.model.js');
 
 
 router.post('/create', todoListCtrl.createTodoList);

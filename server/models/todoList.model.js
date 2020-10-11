@@ -30,7 +30,8 @@ const TodoList = new Schema({
     },
     itemID: [{
         type: Schema.Types.ObjectId, ref: 'ItemsList'
-    }]
+    }],
+    userID: { type: Schema.Types.ObjectId, res: 'User'}
 });
 
 

@@ -1,0 +1,74 @@
+<div class="form_container">
+    <form [formGroup]="registerForm" (ngSubmit)="onRegistrer()" class="editForm shadowEffect">
+        <div>
+            <div class="edit">
+                <p >Registration</p>
+            </div>   
+            <hr>
+
+            <div class="form">
+                <div class="fieldGroup">
+
+                    <div class="fields">
+                        <label>User Name:</label>
+                        <input type="text" formControlName="userName">
+                        <ng-container *ngIf="registerForm.get('userName') as ctrl">
+                            <ng-container *ngIf="ctrl.errors as errors">
+                                <div class="errors" *ngIf="ctrl.touched">
+                                    <span *ngIf="errors.required">Required!</span>
+                                </div>
+                            </ng-container>
+                        </ng-container>
+                    </div>
+
+                    <div class="fields">
+                        <label>Email:</label>
+                        <input type="text" formControlName="email">
+                        <ng-container *ngIf="registerForm.get('email') as ctrl">
+                            <ng-container *ngIf="ctrl.errors as errors">
+                                <div class="errors" *ngIf="ctrl.touched">
+                                    <span *ngIf="errors.required">Required!</span>
+                                </div>
+                            </ng-container>
+                        </ng-container>
+                        
+                        <ng-container *ngIf="errorMessage">
+                            <span  class="errors">{{errorMessage}}</span>
+                        </ng-container>
+                    </div>
+
+                    <div class="fields">
+                        <label>Password:</label>
+                        <input type="text" formControlName="password">
+                        <ng-container *ngIf="registerForm.get('password') as ctrl">
+                            <ng-container *ngIf="ctrl.errors as errors">
+                                <div class="errors" *ngIf="ctrl.touched">
+                                    <span *ngIf="errors.required">Required!</span>
+                                </div>
+                            </ng-container>
+                        </ng-container>
+                    </div>
+
+                    <div class="fields">
+                        <label>Confirm Password:</label>
+                        <input type="text" formControlName="passwordconfirm">
+                        <ng-container *ngIf="registerForm.get('passwordconfirm') as ctrl">
+                            <ng-container *ngIf="ctrl.errors as errors">
+                                <div class="errors" *ngIf="(ctrl.invalid && (ctrl.touched || ctrl.dirty))">
+                                    <span *ngIf="errors.required">Required!</span>
+                                    <span *ngIf="errors?.not_confirmed">Check Again. Password Don't Match!</span>
+                                </div>
+                            </ng-container>
+                        </ng-container>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="save-Button">
+                <button type="submit" [disabled] = "!registerForm.valid"  class="btnEditList">Sign Up</button>
+            </div>
+        </div>
+    </form>
+</div>
+

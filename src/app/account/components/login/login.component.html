@@ -1,0 +1,50 @@
+<div class="form_container">
+    <form [formGroup]="loginForm" (ngSubmit)="login()" class="editForm shadowEffect">
+        <div>
+            <div class="edit">
+                <p >Log-In to MyTodos</p>
+            </div> 
+            <hr>
+
+            <div class="form">
+                <div class="fieldGroup">
+
+                    <div class="fields">
+                        <label>Email:</label>
+                        <input type="text" formControlName="email">
+                        <ng-container *ngIf="loginForm.get('email') as ctrl">
+                            <ng-container *ngIf="ctrl.errors as errors">
+                                <div class="errors" *ngIf="ctrl.touched">
+                                    <span *ngIf="errors.required">Required!</span>
+                                </div>
+                            </ng-container>
+                        </ng-container>
+                    </div>
+
+                    <div class="fields">
+                        <label>Password:</label>
+                        <input type="text" formControlName="password">
+                        <ng-container *ngIf="loginForm.get('password') as ctrl">
+                            <ng-container *ngIf="ctrl.errors as errors">
+                                <div class="errors" *ngIf="ctrl.touched">
+                                    <span *ngIf="errors.required">Required!</span>
+                                </div>
+                            </ng-container>
+                        </ng-container>
+                    </div>
+
+                </div>
+            </div>
+
+            <div><a>Forgot Password?</a></div>
+            <hr>
+
+            <div class="save-Button">
+                <button type="submit" [disabled]="!loginForm.valid" class="btnEditList">Log-In</button>
+            </div>
+            <div>
+                <span>New to MyTodos? <a routerLink="/register">Sign-Up</a></span>
+            </div>
+        </div>
+    </form>
+</div>

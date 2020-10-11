@@ -1,9 +1,11 @@
 const express = require('express');
 const mongoose = require('mongoose');
+const multer = require('multer');
 
+const DB_connection = require('./configuration/config');
 const todolistRoute = require('./routes/todolist.router.js');
 const todoItemsRoute = require('./routes/todoitems.router.js');
-const DB_connection = require('./configuration/config');
+const usersRoute = require('./routes/user.router.js');
 const TodoLists = require('./models/todoList.model.js'); 
 const ItemList = require('./models/ItemsList.model.js');
 
@@ -25,11 +27,12 @@ app.use(express.json()); // to parse body from http request
 
 app.use('/api/todoLists', todolistRoute);
 app.use('/api/todoItems', todoItemsRoute);
+app.use('/api/users', usersRoute);
 
 
 
 
 
-app.listen(PORT, ()=> {
+app.listen(PORT, (error)=> {
     console.log(`Server Port  ${PORT} is Running`);
 });

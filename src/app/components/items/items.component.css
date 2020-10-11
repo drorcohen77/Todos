@@ -89,16 +89,21 @@ li mat-icon {
     margin-right: 5px;
 }
 
-.form {
+.button_form {
     display: flex;
+    justify-content: left;
 }
 
-.form mat-icon {
+/* .button_fields {
+    display: flex;
+} */
+
+.button_form mat-icon {
     margin-right: 5px;
     padding-top: 2px;
 }
 
-.form button {
+.item_button {
     margin-left: 7px;
     width: 30px;
     height: 28px;
@@ -109,7 +114,7 @@ li mat-icon {
     cursor: pointer;
 }
 
-input {
+.item_input {
     height: 29px;
     font-size: 18px;
     border: 1px solid var(--p600);

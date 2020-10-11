@@ -1,7 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { map, switchMap } from 'rxjs/operators';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { FormGroup, FormControl, Validators, NgForm } from '@angular/forms';
 import { Subscription } from 'rxjs';
 
 import { StateService } from 'src/app/core/services/state-srvices.service';
@@ -74,6 +74,9 @@ export class EditListComponent implements OnInit, OnDestroy {
 
 
   async onSubmit() {
+    if (this.editForm.invalid) {
+      return;
+    }
     this.list = <TodoList>this.editForm.value;
 
     if (+this.ID === -1) {

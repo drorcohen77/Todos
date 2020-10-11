@@ -1,4 +1,5 @@
 import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { UpperCaseFirstLetterPipe } from './pipes/upper-case-first-letter.pipe';
 import { HttpClientModule } from '@angular/common/http';
@@ -17,6 +18,7 @@ import { ShortListNamePipe } from './pipes/short-list-name.pipe';
     ShortListNamePipe
   ],
   imports: [
+    CommonModule,
     HttpClientModule,
     RouterModule
   ],

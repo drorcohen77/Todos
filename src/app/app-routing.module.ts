@@ -8,10 +8,14 @@ import { ItemsComponent } from './components/items/items.component';
 import { NotFoundComponent } from './core/components/not-found/not-found.component';
 import { EditListComponent } from './components/edit-list/edit-list.component';
 import { ListDetailsComponent } from './components/list-details/list-details.component';
+import { LoginComponent } from './account/components/login/login.component';
+import { RegisterComponent } from './account/components/register/register.component';
 
 
 const routes: Routes = [
-  { path: '', redirectTo: 'home', pathMatch: 'full' },
+  { path: '', redirectTo: 'register', pathMatch: 'full' },
+  { path: 'login', component: LoginComponent },
+  { path: 'register', component: RegisterComponent },
   { path: 'home', component: HomeComponent },
   { path: 'lists', component: TodoListsComponent, canActivate: [ListsGuard] },
   { path: 'lists/:id', component: ListDetailsComponent },

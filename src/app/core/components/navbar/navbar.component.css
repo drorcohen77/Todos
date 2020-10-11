@@ -2,10 +2,15 @@
     display: grid;
 }
 
-nav p{
-    margin: auto;
-    padding: 15px;
+nav div {
+    display: flex;
+    justify-content: space-between;
     background-color: var(--p800);
+}
+
+nav p{
+    margin-bottom: 0px;
+    padding: 15px;
     color: var(--p100);
     font-size: 25px;
     font-weight: 300px;

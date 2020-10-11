@@ -63,13 +63,13 @@
     </div>
 
     <div *ngIf="ListItems$ !== undefined" class="items">
-        <form class="form" [formGroup]="addItem" (ngSubmit)="onSubmit()">
+        <form class="button_form" [formGroup]="addItem" (ngSubmit)="onSubmit()">
             <div>
                 <mat-icon>check_box_outline_blank</mat-icon>
             </div>
-            <div class="fields" >
-                <input type="text" formControlName="newItem">
-                <button type="submit" [disabled]="!addItem.valid"> + </button>
+            <div class="button_fields">
+                <input type="text" formControlName="newItem" class="item_input">
+                
                 <ng-container *ngIf="addItem.get('newItem') as ctrl">
                     <ng-container *ngIf="ctrl.errors as errors">
                         <div *ngIf="ctrl.touched" class="errors">
@@ -81,6 +81,7 @@
                     </ng-container>
                 </ng-container>
             </div>
+            <button type="submit" [disabled]="!addItem.valid" class="item_button"> + </button>
         </form>
     </div>
 </div>
